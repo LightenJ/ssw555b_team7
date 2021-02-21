@@ -123,7 +123,7 @@ def find_str(fhand):
 
     print(" Family info \n", Family)
 
-fname = input('Enter the file name: ')
+fname = input("Enter the file name: ")
 try:
     fhand = open(fname)  # open File
     sys.stdout = open('OutputFile.txt', 'w')
