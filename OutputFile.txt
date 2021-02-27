@@ -1,4 +1,6 @@
-Individual ID and Name
+Error: Eric Sebast is more than 150 years old.
+
+Individual ID and Name 
  +-----+----------------------+
 |  ID |         NAME         |
 +-----+----------------------+

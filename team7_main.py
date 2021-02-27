@@ -20,6 +20,11 @@ After reading all of the data, print the unique identifiers and names of each of
 import sys
 from prettytable import PrettyTable
 
+import validity_test
+import gedcom
+from gedcom.parser import Parser
+from gedcom.element.individual import IndividualElement
+
 # welcome Message
 print('welcome to P03 Python Assignment\n')
 
@@ -106,6 +111,7 @@ def find_str(fhand):
         Ind.add_row([i, n])
         ind_list.append((i, n))
     Ind.sortby = 'ID'
+
     print("Individual ID and Name \n", Ind)
 
     for f, h, w in zip(Fam, Hus, Wif):
@@ -123,13 +129,33 @@ def find_str(fhand):
 
     print(" Family info \n", Family)
 
+
 fname = input('Enter the file name: ')
 try:
     fhand = open(fname)  # open File
-    sys.stdout = open('OutputFile.txt', 'w')
-    find_str(fhand)
-    fhand.close()  # Close the file
 except:
     print('File cannot be opened:', fname)
     sys.exit()
+
+sys.stdout = open('OutputFile.txt', 'w')
+
+try:
+    gedcom_parser = Parser()
+    gedcom_parser.parse_file(fname)
+    elements = gedcom_parser.get_element_list()
+    for element in elements:
+        if isinstance(element, IndividualElement):
+            error_text = validity_test.check_valid_individual(element)
+            for error in error_text:
+                print(error)
+except Exception as exception:
+    print(exception)
+
+try:
+    find_str(fhand)
+    fhand.close()  # Close the file
+except:
+    print('Processing failure')
+
+
 
