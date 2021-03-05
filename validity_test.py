@@ -15,17 +15,27 @@ Test that the input file is valid, and report any errors.
 """
 
 import datetime
-from gedcom.element.individual import IndividualElement
 from datetime import datetime
 from datetime import date
+from data_classes import Individual
+from data_classes import Family
+from typing import List
 
 
-def check_valid_individual(individual: IndividualElement):
+def check_valid(individuals: List[Individual], families: List[Family]):
     error_statuses = []
-    birth_date, temp1, temp2 = individual.get_birth_data()
-    death_date, temp1, temp2 = individual.get_death_data()
-    my_given_name, my_surname = individual.get_name()
-    my_full_name = my_given_name + " " + my_surname
+    individual: Individual
+    for individual in individuals:
+        error_statuses = check_valid_individual(individual)
+
+    return error_statuses
+
+
+def check_valid_individual(individual: Individual):
+    error_statuses = []
+    birth_date = individual.birth_d
+    death_date = individual.death_d
+    my_full_name = individual.name
 
     error_text = younger_than_150(birth_date, death_date, my_full_name)
     if len(error_text) > 0:
@@ -37,7 +47,7 @@ def check_valid_individual(individual: IndividualElement):
 def younger_than_150(birth_date: str, death_date: str, name: str):
     my_error = ""
 
-    if len(death_date) == 0:   # Individual has not died, check against current date
+    if death_date is None or len(death_date) == 0:   # Individual has not died, check against current date
         death_date = date.today()
         birth_date = datetime.strptime(birth_date, '%d %b %Y')
     else:                      # Individual has died, check birth against death

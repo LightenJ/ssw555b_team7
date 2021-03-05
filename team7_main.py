@@ -21,8 +21,8 @@ import sys
 from prettytable import PrettyTable
 from datetime import datetime
 import validity_test
-from gedcom.parser import Parser
-from gedcom.element.individual import IndividualElement
+from data_classes import Individual
+from data_classes import Family
 
 print('Enter file name with extension when prompted  e.g : test.ged \n')
 
@@ -55,25 +55,6 @@ ind_list = []
 individuals = []
 families = []
 read_dates = []
-
-class Individual:
-    def __init__(self, ind_id):
-        self.ind_id = ind_id
-        self.name = None
-        self.sex = None
-        self.birth_d = None
-        self.death_d = None
-        self.spouse_id = None
-        self.child_id = None
-
-class Family:
-    def __init__(self, fam_id):
-        self.fam_id = fam_id
-        self.marriage_d = None
-        self.hus_id = None
-        self.wife_id = None
-        self.children = []
-        self.divorce_d = None
 
 def date_before(dates):
 
@@ -235,14 +216,9 @@ except:
     print('Processing failure')
 
 try:
-    gedcom_parser = Parser()
-    gedcom_parser.parse_file(fname)
-    elements = gedcom_parser.get_element_list()
-    for element in elements:
-        if isinstance(element, IndividualElement):
-            error_text = validity_test.check_valid_individual(element)
-            for error in error_text:
-                print(error)
+    error_text = validity_test.check_valid(individuals, families)
+    for error in error_text:
+        print(error)
 except Exception as exception:
     print(exception)
 

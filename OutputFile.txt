@@ -1,5 +1,3 @@
-Error: Eric Sebast is more than 150 years old.
-
 Individual ID and Name 
  +-----+----------------------+
 |  ID |         NAME         |
@@ -28,5 +26,8 @@ Individual ID and Name
 | F1 | Jonathan /Sebast/  |   Nancy /Williams/   |
 | F2 |   Mark /Sebast/    | Constance /McKenzie/ |
 | F3 | Timothy /Williams/ |    Donna /Doubet/    |
-| F4 | Buffalo /Billiams/ |  Jill /Farstrider/   |
+| F4 | Buffalo /Billiams/ |    Donna /Doubet/    |
+| F5 | Buffalo /Billiams/ |  Jill /Farstrider/   |
 +----+--------------------+----------------------+
+Error: Eric /Sebast/ is more than 150 years old.
+
