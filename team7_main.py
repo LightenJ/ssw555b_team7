@@ -246,10 +246,6 @@ try:
 except Exception as exception:
     print(exception)
 
-try:
-    find_str(fhand)
-    fhand.close()  # Close the file
-except:
-    print('Processing failure')
+
 
 
