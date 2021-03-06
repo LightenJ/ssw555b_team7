@@ -102,6 +102,26 @@ class Test(TestCase):
         self.assertNotEqual(birthbeforedeath("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
         self.assertNotEqual(birthbeforedeath("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
         self.assertNotEqual(birthbeforedeath("12 NOV 1980", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
+        
+####US04#####
+# This test verifies that marriage date is before divorce
+    def test_US04_marriage_before_divorce(self):
+        self.assertEqual(US04_marriage_before_divorce("6 APR 2001", "1 JUL 1999", "Jonathan Sebast"), "")
+        self.assertNotEqual(US04_marriage_before_divorce("5 AUG 1785", "5 Aug 1789", "Eric Sebast"), "12 Mar 2020")
+        self.assertEqual(US04_marriage_before_divorce("12 DEC 1980", "12 NOV 2020", "Eric Sebast"), "")
+        self.assertNotEqual(US04_marriage_before_divorce("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
+        self.assertNotEqual(US04_marriage_before_divorce("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
+        self.assertNotEqual(US04_marriage_before_divorce("12 NOV 1980", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
+
+####US05#####
+# This test verifies that marriage date is before death date
+    def test_US05_marriage_before_death(self):
+        self.assertEqual(US05_marriage_before_death("6 APR 2001", "1 AUG 2019", "Timothy williams"), "")
+        self.assertNotEqual(US05_marriage_before_death("5 AUG 1785", "", "Eric Sebast"), "12 Mar 2020")
+        self.assertEqual(US05_marriage_before_death("12 NOV 2020", "12 Dec 1980", "Eric Sebast"), "")
+        self.assertNotEqual(US05_marriage_before_death("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "")
+        self.assertNotEqual(US05_marriage_before_death("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "")
+        self.assertNotEqual(US05_marriage_before_death("12 NOV 1980", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
 
 ####US08#####
 # This test verifies that the individual is not born before his/her parents were married.
