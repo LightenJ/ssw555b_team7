@@ -281,12 +281,26 @@ def list_of_living_single(individuals):
             lstliving_single.append(ind.name)
     return lstliving_single
 
-####US33####
+####US35####
 
-def list_of_orphans(families):
-    lstorphan = []
-    for fam in families:
-        if fam.wife_id is None and fam.hus_id is None:
-            print(fam.children)
-            lstorphan.append(fam.children)
-    return lstorphan
+def list_of_recent_births(birth_dates,individuals):
+    lstrecent_birth = []
+    for (birth,ind) in zip(birth_dates,individuals):
+        if birth is not None:
+            _date = datetime.strptime(birth, '%d %b %Y')
+            birthdt = abs((_date - datetime.today()).days)
+            if birthdt < 30:
+                lstrecent_birth.append(ind.name)
+    return lstrecent_birth
+
+####US36####
+
+def list_of_recent_deaths(death_dates,individuals):
+    lstrecent_deaths = []
+    for (deaths,ind) in zip(death_dates,individuals):
+        if deaths is not None:
+            _date = datetime.strptime(deaths, '%d %b %Y')
+            death = abs((_date - datetime.today()).days)
+            if death < 30:
+                lstrecent_deaths.append(ind.name)
+    return lstrecent_deaths
