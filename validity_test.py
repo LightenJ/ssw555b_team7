@@ -254,6 +254,15 @@ def birth_before_marriage_of_parents(birth_date: str, marriage_date: str, name: 
 
     return my_error
 
+####US22##### Unique IDs
+def unique_ids (ids_list):
+    valid = False
+    dict_id_count = {i: ids_list.count(i) for i in ids_list}
+    duplicate = [key for key, val in dict_id_count.items() if val > 1]
+    if not duplicate:
+        valid = True
+    return valid
+
 ####US30####
 
 def list_of_living_married(individuals):

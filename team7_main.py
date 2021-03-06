@@ -54,7 +54,7 @@ ind_list = []
 individuals = []
 families = []
 read_dates = []
-
+ids_list =[]
 
 def data_match(splitline):
     data_found = False
@@ -158,12 +158,13 @@ def find_str(read_lines):
         ind_list.append((ind.ind_id, ind.name))
         read_dates.append(ind.birth_d)
         read_dates.append(ind.death_d)
+        ids_list.append(ind.ind_id)
     Ind.sortby = 'ID'
 
     print("Individual ID and Name \n", Ind)
 
     for f in families:
-        f_id = f.fam_id
+        ids_list.append(f.fam_id)
         read_dates.append(f.marriage_d)
         read_dates.append(f.divorce_d)
         lstchildren = []
@@ -174,7 +175,7 @@ def find_str(read_lines):
                 hus_name = ind_list[i][1]
             if ind_list[i][0] == f.wife_id:
                 wif_name = ind_list[i][1]
-        Fam.add_row([f_id, hus_name, wif_name])
+        Fam.add_row([f.fam_id, hus_name, wif_name])
 
     Fam.sortby = 'ID'
 
@@ -198,9 +199,11 @@ except:
 #can we create a main definition and call function &  user stories ???
 try:
     print("US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is :", validity_test.date_before(read_dates))
+    print("US22 ==> ALL IDs Unique ?:", validity_test.unique_ids(ids_list))
     print("US30 ==> List of living married is : \n", validity_test.list_of_living_married(individuals))
     print("US31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
     print("US33 ==> List orphans is : \n", validity_test.list_of_orphans(families))
+
     error_text = validity_test.check_valid(individuals, families)
     for error in error_text:
         print(error)

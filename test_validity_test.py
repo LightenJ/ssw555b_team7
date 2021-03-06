@@ -1,6 +1,6 @@
 
 from unittest import TestCase
-from validity_test import younger_than_150, date_before
+from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
 from validity_test import divorce_before_death, birth_before_marriage_of_parents
@@ -68,7 +68,6 @@ class Test(TestCase):
         self.assertEqual(married_at_14_or_older("12 NOV 2130", "01 DEC 2144", "Fred Smith"), "")
 
     ####US01##### Dates (Birth, Death, Marriage, Divorce) Before Today
-
     def test_date_lessthan_current(self):
         self.assertEqual(date_before(("12 DEC 1980", "12 DEC 1990", "29 Dec 2020")), False) #< current date
         self.assertFalse(date_before(("12 DEC 1980", "01 DEC 1990", "29 Dec 2020")), False) #< current date
@@ -112,4 +111,11 @@ class Test(TestCase):
         self.assertNotEqual(birth_before_marriage_of_parents("6 may 1990", "6 APR 2001", "Eric Sebast"), "")
         self.assertNotEqual(birth_before_marriage_of_parents("5 Jan 1785", "5 AUG 1785", "Eric Sebast"), "")
 
+
+    ####US22##### Unique ID's --> All individual IDs should be unique and all family IDs should be unique
+    def test_unique_ids(self):
+        self.assertEqual(unique_ids(("I1", "I5", "F1", "F5")), True) #All Unique ID's
+        self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "I1")), False) #one individual duplicate ID's
+        self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1")), False) #one Family duplicate ID's
+        self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1", "I5")), False) #Individual and Family duplicate ID's
 
