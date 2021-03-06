@@ -212,3 +212,30 @@ def married_at_14_or_older(birth_date: str, marriage_date: str, name: str):
 
     return my_error
 
+####US30####
+
+def list_of_living_married(individuals):
+    lstliving_married = []
+    for ind in individuals:
+        if ind.spouse_id is not None and ind.death_d is None:
+            lstliving_married.append(ind.name)
+    return lstliving_married
+
+####US31####
+
+def list_of_living_single(individuals):
+    lstliving_single = []
+    for ind in individuals:
+        if ind.spouse_id is None and ind.death_d is None:
+            lstliving_single.append(ind.name)
+    return lstliving_single
+
+####US33####
+
+def list_of_orphans(families):
+    lstorphan = []
+    for fam in families:
+        if fam.wife_id is None and fam.hus_id is None:
+            print(fam.children)
+            lstorphan.append(fam.children)
+    return lstorphan

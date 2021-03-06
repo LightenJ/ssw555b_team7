@@ -46,7 +46,7 @@ Tag_Level = {
     'NOTE': 0}
 
 
-Ind = PrettyTable(["ID", "NAME"])
+Ind = PrettyTable(["ID", "NAME","BIRTH DATE","DEATH DATE","SPOUSE ID","CHILD ID"])
 Fam = PrettyTable(["ID", "Husband Name", "Wife Name"])
 ind = []
 fam = []
@@ -154,7 +154,7 @@ def find_str(read_lines):
 
 
     for ind in individuals:
-        Ind.add_row([ind.ind_id, ind.name])
+        Ind.add_row([ind.ind_id, ind.name,ind.birth_d,ind.death_d,ind.spouse_id,ind.child_id])
         ind_list.append((ind.ind_id, ind.name))
         read_dates.append(ind.birth_d)
         read_dates.append(ind.death_d)
@@ -166,7 +166,7 @@ def find_str(read_lines):
         f_id = f.fam_id
         read_dates.append(f.marriage_d)
         read_dates.append(f.divorce_d)
-
+        lstchildren = []
         hus_name = '' #default
         wif_name = '' #default
         for i in range(len(ind_list)):
@@ -174,7 +174,6 @@ def find_str(read_lines):
                 hus_name = ind_list[i][1]
             if ind_list[i][0] == f.wife_id:
                 wif_name = ind_list[i][1]
-
         Fam.add_row([f_id, hus_name, wif_name])
 
     Fam.sortby = 'ID'
@@ -199,6 +198,9 @@ except:
 #can we create a main definition and call function &  user stories ???
 try:
     print("US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is :", validity_test.date_before(read_dates))
+    print("US30 ==> List of living married is : \n", validity_test.list_of_living_married(individuals))
+    print("US31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
+    print("US33 ==> List orphans is : \n", validity_test.list_of_orphans(families))
     error_text = validity_test.check_valid(individuals, families)
     for error in error_text:
         print(error)
