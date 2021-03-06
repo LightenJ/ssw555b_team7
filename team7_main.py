@@ -47,7 +47,7 @@ Tag_Level = {
 
 
 Ind = PrettyTable(["ID", "NAME","BIRTH DATE","DEATH DATE","SPOUSE ID","CHILD ID"])
-Fam = PrettyTable(["ID", "Husband Name", "Wife Name"])
+Fam = PrettyTable(["ID", "Husband Name", "Wife Name", "CHILD ID"])
 ind = []
 fam = []
 ind_list = []
@@ -179,7 +179,9 @@ def find_str(read_lines):
                 hus_name = ind_list[i][1]
             if ind_list[i][0] == f.wife_id:
                 wif_name = ind_list[i][1]
-        Fam.add_row([f.fam_id, hus_name, wif_name])
+        for child_id in f.children:
+            lstchildren.append(child_id)
+        Fam.add_row([f.fam_id, hus_name, wif_name, ",".join(f.children)])
 
     Fam.sortby = 'ID'
 
@@ -208,7 +210,6 @@ try:
     print("\nUS31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
     print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))
     print("\nUS36 ==>List of recent deaths : \n", validity_test.list_of_recent_deaths(read_death_dates,individuals))
-    print("\nUS33 ==> List orphans is : \n", validity_test.list_of_orphans(families))
     error_text = validity_test.check_valid(individuals, families)
     for error in error_text:
         print(error)
