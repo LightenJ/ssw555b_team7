@@ -123,4 +123,16 @@ def birthbeforedeath(birth_date: str, death_date: str, name: str):
     return my_error
 
 
+####US04####
+def US04_marriage_before_divorce(marriage_date: str, divorce_date: str):
+    my_error = ""
+    if divorce_date is None or len(divorce_date) == 0:  # Husband and wife are not divorced, check against current date
+        divorce_date = date.today()
+        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+    else:  # Individual has died, check birth against death
+        divorce_date = datetime.strptime(divorce_date, '%d %b %Y')
+        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
 
+    if year_difference(marriage_date, divorce_date) > 0:
+        my_error = "Error: US#04: Family: Married before divorce date.\n"
+    return my_error
