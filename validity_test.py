@@ -63,7 +63,7 @@ def check_valid_individual(individual: Individual):
     return error_statuses
 
 
-def check_valid_individual_spouse(individual: Individual , family: Family):
+def check_valid_individual_spouse(individual: Individual, family: Family):
     error_statuses = []
     my_full_name = individual.name
     birth_date = individual.birth_d
@@ -74,6 +74,9 @@ def check_valid_individual_spouse(individual: Individual , family: Family):
     if len(error_text) > 0:
         error_statuses.append(error_text)
     error_text = divorce_before_death(divorce_date, death_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
+    error_text = married_at_14_or_older(birth_date, marriage_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
     return error_statuses
@@ -191,3 +194,21 @@ def divorce_before_death(divorce_date: str, death_date: str, name: str):
         if day_difference(death_date, divorce_date) < 0:
             my_error = "Error: US#06: Individual " + name + " was divorced after they died.\n"
     return my_error
+
+
+# User story 10, marriage before 14 - married persons must be at least 14 when married.
+def married_at_14_or_older(birth_date: str, marriage_date: str, name: str):
+    my_error = ""
+
+    if marriage_date is None or len(marriage_date) == 0 or birth_date is None or len(birth_date) == 0:
+        # Don't check if no marriage date or no birth date is available - though this is for a family, so
+        # those shouldn't really be possible.
+        pass
+    else:                      # Individual has died, check birth against death
+        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        if year_difference(marriage_date, birth_date) < 14:
+            my_error = "Error: US#10: " + name + " was married when younger than 14.\n"
+
+    return my_error
+

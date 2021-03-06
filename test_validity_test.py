@@ -4,6 +4,7 @@ from validity_test import younger_than_150, date_before
 from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
 from validity_test import divorce_before_death
+from validity_test import married_at_14_or_older
 from datetime import datetime, timedelta
 
 
@@ -25,8 +26,7 @@ class Test(TestCase):
         self.assertNotEqual(younger_than_150("12 DEC 1980", "13 DEC 2130", "Fred Smith"), "")
         self.assertNotEqual(younger_than_150("12 NOV 1980", "01 DEC 2130", "Fred Smith"), "")
 
-
-    # User Story 07: This test verifies that we can detect if someone, living or dead, is 150 years old or older.
+    # User Story 06: Divorce must happen before a person's death
     def test_divorce_before_death(self):
         # Still living
         self.assertEqual(divorce_before_death("12 DEC 1980", "", "Fred Smith"), "")
@@ -45,6 +45,27 @@ class Test(TestCase):
         self.assertEqual(divorce_before_death("12 DEC 2130", "12 DEC 2130", "Fred Smith"), "")
         self.assertEqual(divorce_before_death("12 DEC 2130", "13 DEC 2130", "Fred Smith"), "")
         self.assertEqual(divorce_before_death("12 NOV 2130", "01 DEC 2130", "Fred Smith"), "")
+
+
+    # User Story 10: People must marry at 14 or older
+    def test_married_at_14_or_older(self):
+        # Not married
+        self.assertEqual(married_at_14_or_older("12 DEC 1980", "", "Fred Smith"), "")
+        self.assertEqual(married_at_14_or_older("12 DEC 1980", None, "Fred Smith"), "")
+
+        # Not born (?!)
+        self.assertEqual(married_at_14_or_older("", "12 DEC 1870", "Fred Smith"), "")
+        self.assertEqual(married_at_14_or_older(None, "12 DEC 1870", "Fred Smith"), "")
+
+        # Neither married nor born
+        self.assertEqual(married_at_14_or_older("", None, "Fred Smith"), "")
+        self.assertEqual(married_at_14_or_older(None, "", "Fred Smith"), "")
+
+        # Tests marriages right around age 14
+        self.assertNotEqual(married_at_14_or_older("12 DEC 2130", "11 DEC 2144", "Fred Smith"), "")
+        self.assertEqual(married_at_14_or_older("12 DEC 2130", "12 DEC 2144", "Fred Smith"), "")
+        self.assertEqual(married_at_14_or_older("12 DEC 2130", "13 DEC 2144", "Fred Smith"), "")
+        self.assertEqual(married_at_14_or_older("12 NOV 2130", "01 DEC 2144", "Fred Smith"), "")
 
     ####US01##### Dates (Birth, Death, Marriage, Divorce) Before Today
 
