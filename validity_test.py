@@ -178,7 +178,7 @@ def birthbeforedeath(birth_date: str, death_date: str, name: str):
 
 
 ####US04####
-def US04_marriage_before_divorce(marriage_date: str, divorce_date: str):
+def US04_marriage_before_divorce(marriage_date: str, divorce_date: str, name: str):
     my_error = ""
     if divorce_date is None or len(divorce_date) == 0:  # Husband and wife are not divorced, check against current date
         divorce_date = date.today()
@@ -193,7 +193,7 @@ def US04_marriage_before_divorce(marriage_date: str, divorce_date: str):
 
 
 ####US05####
-def US05_marriage_before_death(marriage_date: str, death_date: str):
+def US05_marriage_before_death(marriage_date: str, death_date: str, name: str):
     my_error = ""
     if death_date is None or len(death_date) == 0:  # Not dead, check against current date
         death_date = date.today()
