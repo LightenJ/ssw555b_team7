@@ -3,7 +3,7 @@ from unittest import TestCase
 from validity_test import younger_than_150, date_before
 from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
-from validity_test import divorce_before_death
+from validity_test import divorce_before_death, birth_before_marriage_of_parents
 from validity_test import married_at_14_or_older
 from datetime import datetime, timedelta
 
@@ -103,3 +103,13 @@ class Test(TestCase):
         self.assertNotEqual(birthbeforedeath("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
         self.assertNotEqual(birthbeforedeath("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
         self.assertNotEqual(birthbeforedeath("12 NOV 1980", "5 AUG 1784", "Eric Sebast"), "12 Mar 2020")
+
+####US08#####
+# This test verifies that the individual is not born before his/her parents were married.
+    def test_birth_before_marriage_of_parents(self):
+        self.assertEqual(birth_before_marriage_of_parents("6 may 2005", "6 APR 2001", "Eric Sebast"), "")
+        self.assertEqual(birth_before_marriage_of_parents("5 sep 1790", "5 AUG 1785", "Eric Sebast"), "")
+        self.assertNotEqual(birth_before_marriage_of_parents("6 may 1990", "6 APR 2001", "Eric Sebast"), "")
+        self.assertNotEqual(birth_before_marriage_of_parents("5 Jan 1785", "5 AUG 1785", "Eric Sebast"), "")
+
+

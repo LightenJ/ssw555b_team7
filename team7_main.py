@@ -130,7 +130,7 @@ def extract_family_info(read_lines, line_no, family):
             family.wife_id = splitline[2]
 
         if splitline[1] == 'CHIL':
-            family.children = splitline[2]
+            family.children.append(splitline[2])
 
         line_no +=1
         splitline = strip_valid_line(read_lines[line_no])
