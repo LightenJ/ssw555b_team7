@@ -3,12 +3,13 @@ from unittest import TestCase
 from validity_test import younger_than_150, date_before
 from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
+from validity_test import divorce_before_death
 from datetime import datetime, timedelta
 
 
 class Test(TestCase):
 
-    # This test verifies that we can detect if someone, living or dead, is 150 years old or older.
+    # User Story 07: This test verifies that we can detect if someone, living or dead, is 150 years old or older.
     def test_younger_than_150(self):
         # Young but still living
         self.assertEqual(younger_than_150("12 DEC 1980", "", "Fred Smith"), "")
@@ -24,7 +25,28 @@ class Test(TestCase):
         self.assertNotEqual(younger_than_150("12 DEC 1980", "13 DEC 2130", "Fred Smith"), "")
         self.assertNotEqual(younger_than_150("12 NOV 1980", "01 DEC 2130", "Fred Smith"), "")
 
-####US01##### Dates (Birth, Death, Marriage, Divorce) Before Today
+
+    # User Story 07: This test verifies that we can detect if someone, living or dead, is 150 years old or older.
+    def test_divorce_before_death(self):
+        # Still living
+        self.assertEqual(divorce_before_death("12 DEC 1980", "", "Fred Smith"), "")
+        self.assertEqual(divorce_before_death("12 DEC 1980", None, "Fred Smith"), "")
+
+        # Never divorced
+        self.assertEqual(divorce_before_death("", "12 DEC 1870", "Fred Smith"), "")
+        self.assertEqual(divorce_before_death(None, "12 DEC 1870", "Fred Smith"), "")
+
+        # Neither divorced nor dead
+        self.assertEqual(divorce_before_death("", None, "Fred Smith"), "")
+        self.assertEqual(divorce_before_death(None, "", "Fred Smith"), "")
+
+        # Tests divorces right around deaths
+        self.assertNotEqual(divorce_before_death("12 DEC 2130", "11 DEC 2130", "Fred Smith"), "")
+        self.assertEqual(divorce_before_death("12 DEC 2130", "12 DEC 2130", "Fred Smith"), "")
+        self.assertEqual(divorce_before_death("12 DEC 2130", "13 DEC 2130", "Fred Smith"), "")
+        self.assertEqual(divorce_before_death("12 NOV 2130", "01 DEC 2130", "Fred Smith"), "")
+
+    ####US01##### Dates (Birth, Death, Marriage, Divorce) Before Today
 
     def test_date_lessthan_current(self):
         self.assertEqual(date_before(("12 DEC 1980", "12 DEC 1990", "29 Dec 2020")), False) #< current date

@@ -24,11 +24,27 @@ from typing import List
 
 def check_valid(individuals: List[Individual], families: List[Family]):
     error_statuses = []
+    temp_error_statuses = []
     individual:Individual
     for individual in individuals:
-        error_statuses = check_valid_individual(individual)
-    for family in families:
-        error_statuses = check_valid_individual_family(individual,family)
+        temp_error_statuses = check_valid_individual(individual)
+
+        # Append any errors we found to the top level error_statuses
+        for error_msg in temp_error_statuses:
+            error_statuses.append(error_msg)
+
+        for family in families:
+
+            # Currently, only checking for husbands and wives being part of the family.  If
+            # a story needs to check children in a family, we'd have to add a case for finding
+            # children from a family.
+            if family.hus_id == individual.ind_id or family.wife_id == individual.ind_id:
+                temp_error_statuses = check_valid_individual_spouse(individual, family)
+
+                # Append any errors we found to the top level error_statuses
+                for error_msg in temp_error_statuses:
+                    error_statuses.append(error_msg)
+
     return error_statuses
 
 
@@ -40,22 +56,28 @@ def check_valid_individual(individual: Individual):
     error_text = younger_than_150(birth_date, death_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
-
-    return error_statuses
-
-def check_valid_individual_family(individual: Individual , family: Family):
-    error_statuses = []
-    birth_date = individual.birth_d
-    marriage_date = family.marriage_d
-    my_full_name = individual.name
-    death_date = individual.death_d
-    error_text = birthbeforemarriage(birth_date, marriage_date, my_full_name)
-    if len(error_text) > 0:
-        error_statuses.append(error_text)
     error_text = birthbeforedeath(birth_date, death_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
+
     return error_statuses
+
+
+def check_valid_individual_spouse(individual: Individual , family: Family):
+    error_statuses = []
+    my_full_name = individual.name
+    birth_date = individual.birth_d
+    death_date = individual.death_d
+    marriage_date = family.marriage_d
+    divorce_date = family.divorce_d
+    error_text = birthbeforemarriage(birth_date, marriage_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
+    error_text = divorce_before_death(divorce_date, death_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
+    return error_statuses
+
 
 def younger_than_150(birth_date: str, death_date: str, name: str):
     my_error = ""
@@ -68,7 +90,7 @@ def younger_than_150(birth_date: str, death_date: str, name: str):
         birth_date = datetime.strptime(birth_date, '%d %b %Y')
 
     if year_difference(death_date, birth_date) >= 150:
-        my_error = "Error: " + name + " is more than 150 years old.\n"
+        my_error = "Error: US#07: " + name + " is more than 150 years old.\n"
 
     return my_error
 
@@ -78,6 +100,10 @@ def year_difference(date1: datetime.date, date2: datetime.date):
     if date2.month > date1.month or (date1.month == date2.month and date2.day > date1.day):
         years_diff = years_diff - 1
     return years_diff
+
+
+def day_difference(late_date: datetime.date, early_date: datetime.date):
+    return (late_date - early_date).days
 
 ####US01##### Dates (Birth, Death, Marriage, Divorce) Before Today
 def date_before(dates):
@@ -123,4 +149,16 @@ def birthbeforedeath(birth_date: str, death_date: str, name: str):
     return my_error
 
 
+# User Story 6, divorce must be before (okay, or on the day of) death.
+def divorce_before_death(divorce_date: str, death_date: str, name: str):
+    my_error = ""
+    if death_date is None or len(death_date) == 0 or divorce_date is None or len(divorce_date) == 0:
+        # Either hasn't died or hasn't divorced, so no way to be invalid
+        pass
+    else:
+        divorce_date = datetime.strptime(divorce_date, '%d %b %Y')
+        death_date = datetime.strptime(death_date, '%d %b %Y')
+        if day_difference(death_date, divorce_date) < 0:
+            my_error = "Error: US#06: Individual " + name + " was divorced after they died.\n"
+    return my_error
 
