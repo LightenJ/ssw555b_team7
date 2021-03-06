@@ -5,8 +5,6 @@ from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
 from datetime import datetime, timedelta
 
-from gedcom.element.individual import IndividualElement
-
 
 class Test(TestCase):
 
