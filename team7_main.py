@@ -19,7 +19,6 @@ After reading all of the data, print the unique identifiers and names of each of
 
 import sys
 from prettytable import PrettyTable
-from datetime import datetime
 import validity_test
 from data_classes import Individual
 from data_classes import Family
