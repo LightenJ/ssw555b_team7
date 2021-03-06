@@ -164,6 +164,21 @@ def US04_marriage_before_divorce(marriage_date: str, divorce_date: str):
     return my_error
 
 
+####US05####
+def US05_marriage_before_death(marriage_date: str, death_date: str):
+    my_error = ""
+    if death_date is None or len(death_date) == 0:  # Not dead, check against current date
+        death_date = date.today()
+        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+    else:  
+        death_date = datetime.strptime(death_date, '%d %b %Y')
+        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+
+    if year_difference(marriage_date, death_date) > 0:
+        my_error = "Error: US#05: Family: Married before death.\n"
+    return my_error
+
+
 # User Story 6, divorce must be before (okay, or on the day of) death.
 def divorce_before_death(divorce_date: str, death_date: str, name: str):
     my_error = ""
