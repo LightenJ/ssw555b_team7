@@ -54,7 +54,8 @@ ind_list = []
 individuals = []
 families = []
 read_dates = []
-
+read_birth_dates = []
+read_death_dates = []
 
 def data_match(splitline):
     data_found = False
@@ -158,6 +159,8 @@ def find_str(read_lines):
         ind_list.append((ind.ind_id, ind.name))
         read_dates.append(ind.birth_d)
         read_dates.append(ind.death_d)
+        read_death_dates.append(ind.death_d)
+        read_birth_dates.append(ind.birth_d)
     Ind.sortby = 'ID'
 
     print("Individual ID and Name \n", Ind)
@@ -197,10 +200,11 @@ except:
     print('Processing failure')
 #can we create a main definition and call function &  user stories ???
 try:
-    print("US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is :", validity_test.date_before(read_dates))
-    print("US30 ==> List of living married is : \n", validity_test.list_of_living_married(individuals))
-    print("US31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
-    print("US33 ==> List orphans is : \n", validity_test.list_of_orphans(families))
+    print("\nUS01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is :", validity_test.date_before(read_dates))
+    print("\nUS30 ==> List of living married is : \n", validity_test.list_of_living_married(individuals))
+    print("\nUS31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
+    print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))
+    print("\nUS36 ==>List of recent deaths : \n", validity_test.list_of_recent_deaths(read_death_dates,individuals))
     error_text = validity_test.check_valid(individuals, families)
     for error in error_text:
         print(error)
