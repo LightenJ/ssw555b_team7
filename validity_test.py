@@ -45,6 +45,18 @@ def check_valid(individuals: List[Individual], families: List[Family]):
                 for error_msg in temp_error_statuses:
                     error_statuses.append(error_msg)
 
+    #Restarting through families to process all children
+    for family in families:
+        # Find all the children in a family
+        for child in family.children:
+            for temp_ind in individuals:
+                if child == temp_ind.ind_id:
+                    temp_error_statuses = check_valid_individual_child(temp_ind, family)
+
+                    # Append any errors we found to the top level error_statuses
+                    for error_msg in temp_error_statuses:
+                        error_statuses.append(error_msg)
+
     return error_statuses
 
 
@@ -77,6 +89,19 @@ def check_valid_individual_spouse(individual: Individual, family: Family):
     if len(error_text) > 0:
         error_statuses.append(error_text)
     error_text = married_at_14_or_older(birth_date, marriage_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
+    return error_statuses
+
+
+def check_valid_individual_child(individual: Individual, family: Family):
+    error_statuses = []
+    my_full_name = individual.name
+    birth_date = individual.birth_d
+    death_date = individual.death_d
+    marriage_date = family.marriage_d
+    divorce_date = family.divorce_d
+    error_text = birth_before_marriage_of_parents(birth_date, marriage_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
     return error_statuses
@@ -209,6 +234,23 @@ def married_at_14_or_older(birth_date: str, marriage_date: str, name: str):
         birth_date = datetime.strptime(birth_date, '%d %b %Y')
         if year_difference(marriage_date, birth_date) < 14:
             my_error = "Error: US#10: " + name + " was married when younger than 14.\n"
+
+    return my_error
+
+
+# User story 8, check for a child born before his or her parents were married.
+def birth_before_marriage_of_parents(birth_date: str, marriage_date: str, name: str):
+    my_error = ""
+
+    if marriage_date is None or len(marriage_date) == 0 or birth_date is None or len(birth_date) == 0:
+        # Don't check if no marriage date or no birth date is available - though this is for a family, so
+        # those shouldn't really be possible.
+        pass
+    else:                      # See if the parents were married before the individual was born
+        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        if day_difference(birth_date, marriage_date) < 0:
+            my_error = "Error: US#08: " + name + " was born before his/her parents were married.\n"
 
     return my_error
 
