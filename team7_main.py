@@ -56,19 +56,6 @@ individuals = []
 families = []
 read_dates = []
 
-def date_before(dates):
-
-    valid = False
-    try:
-        for date in dates:
-            if date != None:
-                f_date = datetime.strptime(date.rstrip(), '%d %b %Y').date()
-                c_date = datetime.now().date()
-                if f_date > c_date:
-                    valid = True
-    except: valid = None
-
-    return valid
 
 def data_match(splitline):
     data_found = False
@@ -195,7 +182,6 @@ def find_str(read_lines):
 
     print(" Family info \n", Fam)
 
-    date_before(read_dates)
 
 
 fname = input('Enter the file name: ')
@@ -206,16 +192,14 @@ except:
     print('File cannot be opened:', fname)
     sys.exit()
 
-sys.stdout = open('OutputFile.txt', 'w')
-
-
 try:
     find_str(read_lines)
     fhand.close()  # Close the file
 except:
     print('Processing failure')
-
+#can we create a main definition and call function &  user stories ???
 try:
+    print("US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is :", validity_test.date_before(read_dates))
     error_text = validity_test.check_valid(individuals, families)
     for error in error_text:
         print(error)
@@ -223,5 +207,5 @@ except Exception as exception:
     print(exception)
 
 
-
+sys.stdout = open('OutputFile.txt', 'w')
 

@@ -79,6 +79,21 @@ def year_difference(date1: datetime.date, date2: datetime.date):
         years_diff = years_diff - 1
     return years_diff
 
+####US01##### Dates (Birth, Death, Marriage, Divorce) Before Today
+def date_before(dates):
+
+    valid = False
+    try:
+        for date in dates:
+            if date != None:
+                f_date = datetime.strptime(date.rstrip(), '%d %b %Y').date()
+                c_date = datetime.now().date()
+                if f_date > c_date:
+                    valid = True
+    except: valid = None
+
+    return valid
+
 ####US02#####
 def birthbeforemarriage(birth_date: str, marriage_date: str, name: str):
     my_error = ""
@@ -106,3 +121,6 @@ def birthbeforedeath(birth_date: str, death_date: str, name: str):
     if year_difference(birth_date, death_date) > 0:
         my_error = "Error:INDIVIDUAL: US#02: Individual " + name + " died before they were born.\n"
     return my_error
+
+
+
