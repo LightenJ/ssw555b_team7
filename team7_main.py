@@ -181,6 +181,7 @@ def find_str(read_lines):
                 wif_name = ind_list[i][1]
         for child_id in f.children:
             lstchildren.append(child_id)
+
         Fam.add_row([f.fam_id, hus_name, wif_name, ",".join(f.children)])
 
     Fam.sortby = 'ID'

@@ -142,14 +142,14 @@ def day_difference(late_date: datetime.date, early_date: datetime.date):
 ####US01##### Dates (Birth, Death, Marriage, Divorce) Before Today
 def date_before(dates):
 
-    valid = False
+    valid = True
     try:
         for date in dates:
             if date != None:
                 f_date = datetime.strptime(date.rstrip(), '%d %b %Y').date()
                 c_date = datetime.now().date()
                 if f_date > c_date:
-                    valid = True
+                    valid = False
     except: valid = None
 
     return valid
