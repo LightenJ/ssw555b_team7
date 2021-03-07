@@ -4,7 +4,7 @@ from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
 from validity_test import divorce_before_death, birth_before_marriage_of_parents
-from validity_test import married_at_14_or_older
+from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
 from datetime import datetime, timedelta
 
 
