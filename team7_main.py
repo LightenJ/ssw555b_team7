@@ -206,14 +206,14 @@ except:
 
 try:
     print("\nUS01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is :", validity_test.date_before(read_dates))
+    error_text = validity_test.check_valid(individuals, families)
+    for error in error_text:
+        print(error)
     print("\nUS22 ==> ALL IDs Unique ?:", validity_test.unique_ids(ids_list))
     print("\nUS30 ==> List of living married is : \n", validity_test.list_of_living_married(individuals))
     print("\nUS31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
     print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))
     print("\nUS36 ==>List of recent deaths : \n", validity_test.list_of_recent_deaths(read_death_dates,individuals))
-    error_text = validity_test.check_valid(individuals, families)
-    for error in error_text:
-        print(error)
 except Exception as exception:
     print(exception)
 

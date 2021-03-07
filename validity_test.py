@@ -71,7 +71,6 @@ def check_valid_individual(individual: Individual):
     error_text = birthbeforedeath(birth_date, death_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
-
     return error_statuses
 
 
@@ -85,16 +84,16 @@ def check_valid_individual_spouse(individual: Individual, family: Family):
     error_text = birthbeforemarriage(birth_date, marriage_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
-    error_text = divorce_before_death(divorce_date, death_date, my_full_name)
-    if len(error_text) > 0:
-        error_statuses.append(error_text)
-    error_text = married_at_14_or_older(birth_date, marriage_date, my_full_name)
-    if len(error_text) > 0:
-        error_statuses.append(error_text)
     error_text = US04_marriage_before_divorce(marriage_date, divorce_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
     error_text = US05_marriage_before_death(marriage_date, death_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
+    error_text = divorce_before_death(divorce_date, death_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
+    error_text = married_at_14_or_older(birth_date, marriage_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
     return error_statuses
