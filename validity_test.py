@@ -91,6 +91,12 @@ def check_valid_individual_spouse(individual: Individual, family: Family):
     error_text = married_at_14_or_older(birth_date, marriage_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
+    error_text = US04_marriage_before_divorce(marriage_date, divorce_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
+    error_text = US05_marriage_before_death(marriage_date, death_date, my_full_name)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
     return error_statuses
 
 
@@ -173,7 +179,7 @@ def birthbeforedeath(birth_date: str, death_date: str, name: str):
         birth_date = datetime.strptime(birth_date, '%d %b %Y')
 
     if year_difference(birth_date, death_date) > 0:
-        my_error = "Error:INDIVIDUAL: US#02: Individual " + name + " died before they were born.\n"
+        my_error = "Error:INDIVIDUAL: US#03: Individual " + name + " died before they were born.\n"
     return my_error
 
 
