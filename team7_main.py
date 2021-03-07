@@ -191,6 +191,7 @@ def find_str(read_lines):
 
 
 fname = input('Enter the file name: ')
+sys.stdout = open('OutputFile.txt', 'w')
 try:
     fhand = open(fname)  # open File
     read_lines = fhand.readlines()
@@ -218,5 +219,5 @@ except Exception as exception:
     print(exception)
 
 
-sys.stdout = open('OutputFile.txt', 'w')
+
 
