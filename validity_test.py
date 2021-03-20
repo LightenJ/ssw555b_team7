@@ -60,6 +60,24 @@ def check_valid(individuals: List[Individual], families: List[Family]):
     return error_statuses
 
 
+def convert_date(input_date: str):
+    try:
+        converted_date = datetime.strptime(input_date, '%d %b %Y')
+    except ValueError:
+        converted_date = None
+
+    return converted_date
+
+
+def date_is_invalid(input_date: str):
+    date_invalid = (input_date is None or len(input_date) == 0)
+    if not date_invalid:
+        return_date = convert_date(input_date)
+        if return_date is None:
+            date_invalid = True
+
+    return date_invalid
+
 def check_valid_individual(individual: Individual):
     error_statuses = []
     birth_date = individual.birth_d
@@ -115,12 +133,12 @@ def check_valid_individual_child(individual: Individual, family: Family):
 def younger_than_150(birth_date: str, death_date: str, name: str):
     my_error = ""
 
-    if death_date is None or len(death_date) == 0:   # Individual has not died, check against current date
+    if date_is_invalid(death_date):   # Individual has not died, check against current date
         death_date = date.today()
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        birth_date = convert_date(birth_date)
     else:                      # Individual has died, check birth against death
-        death_date = datetime.strptime(death_date, '%d %b %Y')
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        death_date = convert_date(death_date)
+        birth_date = convert_date(birth_date)
 
     if year_difference(death_date, birth_date) >= 150:
         my_error = "Error: US#07: " + name + " is more than 150 years old.\n"
@@ -156,12 +174,12 @@ def date_before(dates):
 ####US02#####
 def birthbeforemarriage(birth_date: str, marriage_date: str, name: str):
     my_error = ""
-    if marriage_date is None or len(marriage_date) == 0:   # Individual is not married, check against current date
+    if date_is_invalid(marriage_date):   # Individual is not married, check against current date
         marriage_date = date.today()
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        birth_date = convert_date(birth_date)
     else:
-        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        marriage_date = convert_date(marriage_date)
+        birth_date = convert_date(birth_date)
 
     if year_difference(marriage_date, birth_date) < 0:
         my_error = "Error: US#02: Individual " + name + " was married before they were born.\n"
@@ -170,12 +188,12 @@ def birthbeforemarriage(birth_date: str, marriage_date: str, name: str):
 ####US03#####
 def birthbeforedeath(birth_date: str, death_date: str, name: str):
     my_error = ""
-    if death_date is None or len(death_date) == 0:  # Individual is not dead, check against current date
+    if date_is_invalid(death_date):  # Individual is not dead, check against current date
         death_date = date.today()
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        birth_date = convert_date(birth_date)
     else:  # Individual has died, check birth against death
-        death_date = datetime.strptime(death_date, '%d %b %Y')
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        death_date = convert_date(death_date)
+        birth_date = convert_date(birth_date)
 
     if year_difference(birth_date, death_date) > 0:
         my_error = "Error: US#03: Individual " + name + " died before they were born.\n"
@@ -185,12 +203,12 @@ def birthbeforedeath(birth_date: str, death_date: str, name: str):
 ####US04####
 def US04_marriage_before_divorce(marriage_date: str, divorce_date: str, name: str):
     my_error = ""
-    if divorce_date is None or len(divorce_date) == 0:  # Husband and wife are not divorced, check against current date
+    if date_is_invalid(divorce_date):  # Husband and wife are not divorced, check against current date
         divorce_date = date.today()
-        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+        marriage_date = convert_date(marriage_date)
     else:  # Individual has died, check birth against death
-        divorce_date = datetime.strptime(divorce_date, '%d %b %Y')
-        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+        divorce_date = convert_date(divorce_date)
+        marriage_date = convert_date(marriage_date)
 
     if year_difference(marriage_date, divorce_date) > 0:
         my_error = "Error: US#04: Family: Married before divorce date.\n"
@@ -200,12 +218,12 @@ def US04_marriage_before_divorce(marriage_date: str, divorce_date: str, name: st
 ####US05####
 def US05_marriage_before_death(marriage_date: str, death_date: str, name: str):
     my_error = ""
-    if death_date is None or len(death_date) == 0:  # Not dead, check against current date
+    if date_is_invalid(death_date):  # Not dead, check against current date
         death_date = date.today()
-        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+        marriage_date = convert_date(marriage_date)
     else:  
-        death_date = datetime.strptime(death_date, '%d %b %Y')
-        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
+        death_date = convert_date(death_date)
+        marriage_date = convert_date(marriage_date)
 
     if year_difference(marriage_date, death_date) > 0:
         my_error = "Error: US#05: Family: Married before death.\n"
@@ -215,12 +233,12 @@ def US05_marriage_before_death(marriage_date: str, death_date: str, name: str):
 # User Story 6, divorce must be before (okay, or on the day of) death.
 def divorce_before_death(divorce_date: str, death_date: str, name: str):
     my_error = ""
-    if death_date is None or len(death_date) == 0 or divorce_date is None or len(divorce_date) == 0:
+    if date_is_invalid(death_date) or date_is_invalid(divorce_date):
         # Either hasn't died or hasn't divorced, so no way to be invalid
         pass
     else:
-        divorce_date = datetime.strptime(divorce_date, '%d %b %Y')
-        death_date = datetime.strptime(death_date, '%d %b %Y')
+        divorce_date = convert_date(divorce_date)
+        death_date = convert_date(death_date)
         if day_difference(death_date, divorce_date) < 0:
             my_error = "Error: US#06: Individual " + name + " was divorced after they died.\n"
     return my_error
@@ -230,13 +248,13 @@ def divorce_before_death(divorce_date: str, death_date: str, name: str):
 def married_at_14_or_older(birth_date: str, marriage_date: str, name: str):
     my_error = ""
 
-    if marriage_date is None or len(marriage_date) == 0 or birth_date is None or len(birth_date) == 0:
+    if date_is_invalid(marriage_date) or date_is_invalid(birth_date):
         # Don't check if no marriage date or no birth date is available - though this is for a family, so
         # those shouldn't really be possible.
         pass
     else:                      # Individual has died, check birth against death
-        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        marriage_date = convert_date(marriage_date)
+        birth_date = convert_date(birth_date)
         if year_difference(marriage_date, birth_date) < 14:
             my_error = "Error: US#10: " + name + " was married when younger than 14.\n"
 
@@ -247,13 +265,13 @@ def married_at_14_or_older(birth_date: str, marriage_date: str, name: str):
 def birth_before_marriage_of_parents(birth_date: str, marriage_date: str, name: str):
     my_error = ""
 
-    if marriage_date is None or len(marriage_date) == 0 or birth_date is None or len(birth_date) == 0:
+    if date_is_invalid(marriage_date) or date_is_invalid(birth_date):
         # Don't check if no marriage date or no birth date is available - though this is for a family, so
         # those shouldn't really be possible.
         pass
     else:                      # See if the parents were married before the individual was born
-        marriage_date = datetime.strptime(marriage_date, '%d %b %Y')
-        birth_date = datetime.strptime(birth_date, '%d %b %Y')
+        marriage_date = convert_date(marriage_date)
+        birth_date = convert_date(birth_date)
         if day_difference(birth_date, marriage_date) < 0:
             my_error = "Error: US#08: " + name + " was born before his/her parents were married.\n"
 
@@ -292,7 +310,7 @@ def list_of_recent_births(birth_dates,individuals):
     lstrecent_birth = []
     for (birth,ind) in zip(birth_dates,individuals):
         if birth is not None:
-            _date = datetime.strptime(birth, '%d %b %Y')
+            _date = convert_date(birth)
             birthdt = abs((_date - datetime.today()).days)
             if birthdt < 30:
                 lstrecent_birth.append(ind.name)
@@ -304,7 +322,7 @@ def list_of_recent_deaths(death_dates,individuals):
     lstrecent_deaths = []
     for (deaths,ind) in zip(death_dates,individuals):
         if deaths is not None:
-            _date = datetime.strptime(deaths, '%d %b %Y')
+            _date = convert_date(deaths)
             death = abs((_date - datetime.today()).days)
             if death < 30:
                 lstrecent_deaths.append(ind.name)
