@@ -5,7 +5,9 @@ from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
 from validity_test import divorce_before_death, birth_before_marriage_of_parents
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
+from validity_test import correct_gender_for_role
 from datetime import datetime, timedelta
+from data_classes import Individual, Family
 
 
 class Test(TestCase):
@@ -138,4 +140,60 @@ class Test(TestCase):
         self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "I1")), False) #one individual duplicate ID's
         self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1")), False) #one Family duplicate ID's
         self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1", "I5")), False) #Individual and Family duplicate ID's
+
+
+    # User Story 21: Correct gender for role
+    def test_correct_gender_for_role(self):
+
+        ind = Individual("TestID")
+        family = Family("FAM001")
+        family.wife_id = "WIFEIND"
+        family.hus_id = "HUSIND"
+        ind.name = "A name"
+
+        # Husband cases
+        ind.ind_id = "HUSIND"
+
+        # Valid husband cases
+        ind.sex = "M"
+        self.assertEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "m"
+        self.assertEqual(correct_gender_for_role(ind, family), "")
+
+        # Unrecognized gender cases
+        ind.sex = None
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "Male"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "Banana"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+
+        # Illegal gender cases
+        ind.sex = "F"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "f"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+
+        # Wife cases
+        ind.ind_id = "WIFEIND"
+
+        # Valid wife cases
+        ind.sex = "F"
+        self.assertEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "f"
+        self.assertEqual(correct_gender_for_role(ind, family), "")
+
+        # Unrecognized gender cases
+        ind.sex = None
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "Female"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "Banana"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+
+        # Illegal gender cases
+        ind.sex = "M"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
+        ind.sex = "m"
+        self.assertNotEqual(correct_gender_for_role(ind, family), "")
 

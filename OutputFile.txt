@@ -34,11 +34,15 @@ Individual ID and Name
 | F101 |                    |   LateBirth /Girl/   |            |
 |  F2  |   Mark /Sebast/    | Constance /McKenzie/ | I1,I15,I16 |
 |  F3  | Timothy /Williams/ |    Donna /Doubet/    | I2,I9,I10  |
-|  F4  | Buffalo /Billiams/ |    Donna /Doubet/    |            |
+|  F4  |   Donna /Doubet/   |  Buffalo /Billiams/  |            |
 |  F5  | Buffalo /Billiams/ |  Jill /Farstrider/   |    I12     |
 +------+--------------------+----------------------+------------+
 
 US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is : False
+Error: US#21: Donna /Doubet/ is a woman listed as a husband in family F4.
+
+Error: US#21: Buffalo /Billiams/ is a man listed as a wife in family F4.
+
 Error: US#07: Eric /Sebast/ is more than 150 years old.
 
 Error: US#04: Family: Married before divorce date.
@@ -55,9 +59,13 @@ Error: US#05: Family: Married before death.
 
 Error: US#10: LateBirth /Girl/ was married when younger than 14.
 
+Warning: US#21: LateBirth /Girl/ is a spouse in family F100, but that person's gender is unknown.
+
 Error: US#02: Individual LateBirth /Girl/ was married before they were born.
 
 Error: US#10: LateBirth /Girl/ was married when younger than 14.
+
+Warning: US#21: LateBirth /Girl/ is a spouse in family F101, but that person's gender is unknown.
 
 Error: US#08: Eric /Sebast/ was born before his/her parents were married.
 

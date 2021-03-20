@@ -114,6 +114,9 @@ def check_valid_individual_spouse(individual: Individual, family: Family):
     error_text = married_at_14_or_older(birth_date, marriage_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
+    error_text = correct_gender_for_role(individual, family)
+    if len(error_text) > 0:
+        error_statuses.append(error_text)
     return error_statuses
 
 
@@ -276,6 +279,28 @@ def birth_before_marriage_of_parents(birth_date: str, marriage_date: str, name: 
             my_error = "Error: US#08: " + name + " was born before his/her parents were married.\n"
 
     return my_error
+
+
+# User story 21, correct gender for role
+def correct_gender_for_role(individual : Individual, family : Family):
+    my_error = ""
+
+    # Assumption: this function is called only if the individual is a spouse in the family - so
+    # the individual ID is valid, and at least one spouse's ID in the family matches it.
+    if individual.sex is None or (individual.sex.upper() != "M" and individual.sex.upper() != "F"):
+        my_error = "Warning: US#21: " + individual.name + " is a spouse in family " + family.fam_id + \
+                   ", but that person's gender is unknown.\n"
+    elif individual.sex.upper() == "M":
+        if individual.ind_id == family.wife_id:
+            my_error = "Error: US#21: " + individual.name + " is a man listed as a wife in family " \
+                       + family.fam_id + ".\n"
+    else:  # individual.sex.upper() == "F":
+        if individual.ind_id == family.hus_id:
+            my_error = "Error: US#21: " + individual.name + " is a woman listed as a husband in family " \
+                       + family.fam_id + ".\n"
+
+    return my_error
+
 
 ####US22##### Unique IDs
 def unique_ids (ids_list):
