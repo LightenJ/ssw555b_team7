@@ -3,7 +3,7 @@ Individual ID and Name
 |  ID  |         NAME         |  BIRTH DATE |  DEATH DATE | SPOUSE ID | CHILD ID |
 +------+----------------------+-------------+-------------+-----------+----------+
 |  I1  |  Jonathan /Sebast/   | 12 DEC 1980 |     None    |     F1    |    F2    |
-| I10  |  Regena /Williams/   |  3 JUN 1980 |     None    |    None   |    F3    |
+| I10  |  Regena /Williams/   |  3 JUN 1980 |     None    |    F101   |    F3    |
 | I100 |     Born /Early/     |  1 JAN 1948 |  1 AUG 1947 |    None   |   None   |
 | I101 |    Future /Girl/     |  1 AUG 2021 |     None    |    None   |   None   |
 | I102 |    Present /Girl/    |  1 AUG 1985 |     None    |    None   |   None   |
@@ -18,8 +18,10 @@ Individual ID and Name
 | I16  |    Eric /Sebast/     |  5 AUG 1784 | 12 NOV 2020 |    None   |    F2    |
 |  I2  |   Nancy /Williams/   |  1 JAN 1978 |     None    |     F1    |    F3    |
 |  I3  |   Stephen /Sebast/   | 10 APR 2011 |     None    |    None   |    F1    |
-|  I4  |  Zachariah /Sebast/  | 16 DEC 2006 |     None    |    None   |    F1    |
+|  I4  |  Zachariah /Sebast/  | 16 DEC 2006 |     None    |    F102   |    F1    |
+| I49  |   Bill /Williams/    |  8 JUN 1980 |     None    |    F101   |   None   |
 |  I5  |   Abigail /Sebast/   | 12 OCT 2008 |     None    |    None   |    F1    |
+| I50  |   Susan /Williams/   |  3 JUN 2005 |     None    |    F102   |   F101   |
 |  I6  |  Timothy /Williams/  |  1 JAN 1950 |  1 AUG 2019 |     F3    |   None   |
 |  I7  |    Donna /Doubet/    |  1 JAN 1948 |     None    |     F4    |   None   |
 |  I8  |  Buffalo /Billiams/  |  2 JAN 1952 |     None    |     F5    |   None   |
@@ -32,6 +34,8 @@ Individual ID and Name
 |  F1  | Jonathan /Sebast/  |   Nancy /Williams/   |  I3,I4,I5  |
 | F100 |    Born /Early/    |   LateBirth /Girl/   |            |
 | F101 |                    |   LateBirth /Girl/   |            |
+| F102 | Zachariah /Sebast/ |   Susan /Williams/   |            |
+| F103 |  Bill /Williams/   |  Regena /Williams/   |    I50     |
 |  F2  |   Mark /Sebast/    | Constance /McKenzie/ | I1,I15,I16 |
 |  F3  | Timothy /Williams/ |    Donna /Doubet/    | I2,I9,I10  |
 |  F4  |   Donna /Doubet/   |  Buffalo /Billiams/  |            |
@@ -39,9 +43,13 @@ Individual ID and Name
 +------+--------------------+----------------------+------------+
 
 US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is : False
+Error: US#04: Family: Married before divorce date.
+
 Error: US#21: Donna /Doubet/ is a woman listed as a husband in family F4.
 
 Error: US#21: Buffalo /Billiams/ is a man listed as a wife in family F4.
+
+Error: US#04: Family: Married before divorce date.
 
 Error: US#07: Eric /Sebast/ is more than 150 years old.
 
@@ -69,14 +77,16 @@ Warning: US#21: LateBirth /Girl/ is a spouse in family F101, but that person's g
 
 Error: US#08: Eric /Sebast/ was born before his/her parents were married.
 
+Error: US#19: Husband I4 and wife I50 in family F102 are first cousins who share the following grandparent(s): I6 I7.
+
 
 US22 ==> ALL IDs Unique ?: False
 
 US30 ==> List of living married is : 
- ['Jonathan /Sebast/', 'Nancy /Williams/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/']
+ ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/']
 
 US31 ==> List of living single is : 
- ['Stephen /Sebast/', 'Zachariah /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Regena /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/']
+ ['Stephen /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/']
 
 US35 ==>List of recent births : 
  ['Clone /001/', 'Clone /002/']

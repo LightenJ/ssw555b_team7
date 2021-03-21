@@ -5,9 +5,9 @@ from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
 from validity_test import divorce_before_death, birth_before_marriage_of_parents
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
-from validity_test import correct_gender_for_role
+from validity_test import correct_gender_for_role, married_first_cousins
 from datetime import datetime, timedelta
-from data_classes import Individual, Family
+from data_classes import Individual, Family, Ancestors
 
 
 class Test(TestCase):
@@ -197,3 +197,35 @@ class Test(TestCase):
         ind.sex = "m"
         self.assertNotEqual(correct_gender_for_role(ind, family), "")
 
+    # User Story 19: Married first cousins
+    def test_married_first_cousins(self):
+
+        ancestor_dict: Dict[str, Ancestors] = {}
+        family = Family("FAM001")
+
+        family.fam_id = "FAM01"
+        family.wife_id = "WIFE01"
+        family.hus_id = "HUS01"
+
+        # No ancestors exist
+        self.assertEqual(married_first_cousins(family, ancestor_dict), "")
+
+        # Only parents known
+        ancestor_dict[family.wife_id] = Ancestors()
+        ancestor_dict[family.wife_id].parents = {"MOM1", "DAD1"}
+        ancestor_dict[family.hus_id] = Ancestors()
+        ancestor_dict[family.hus_id].parents = {"MOM2", "DAD2"}
+        self.assertEqual(married_first_cousins(family, ancestor_dict), "")
+
+        # Unrelated grandparents
+        ancestor_dict[family.wife_id].grandparents = {"GMA1", "GPA1", "GMA2", "GPA2"}
+        ancestor_dict[family.hus_id].grandparents = {"GMA3", "GPA3", "GMA4", "GPA4"}
+        self.assertEqual(married_first_cousins(family, ancestor_dict), "")
+
+        # One shared grandparent
+        ancestor_dict[family.wife_id].grandparents = {"GMA3", "GPA1", "GMA2", "GPA2"}
+        self.assertNotEqual(married_first_cousins(family, ancestor_dict), "")
+
+        # Shared grandparent but same parents
+        ancestor_dict[family.wife_id].parents = {"MOM2", "DAD1"}
+        self.assertEqual(married_first_cousins(family, ancestor_dict), "")

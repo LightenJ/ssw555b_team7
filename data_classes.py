@@ -33,3 +33,8 @@ class Family:
         self.children = []
         self.divorce_d = None
 
+
+class Ancestors:
+    def __init__(self):
+        self.parents = []
+        self.grandparents = []

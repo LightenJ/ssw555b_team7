@@ -17,15 +17,16 @@ Test that the input file is valid, and report any errors.
 import datetime
 from datetime import datetime
 from datetime import date
-from data_classes import Individual
+from data_classes import Individual, Ancestors
 from data_classes import Family
-from typing import List
+from data_classes import Ancestors
+from typing import List, Dict, Any
 
 
 def check_valid(individuals: List[Individual], families: List[Family]):
     error_statuses = []
     temp_error_statuses = []
-    individual:Individual
+    individual: Individual
     for individual in individuals:
         temp_error_statuses = check_valid_individual(individual)
 
@@ -45,7 +46,7 @@ def check_valid(individuals: List[Individual], families: List[Family]):
                 for error_msg in temp_error_statuses:
                     error_statuses.append(error_msg)
 
-    #Restarting through families to process all children
+    # Restarting through families to process all children
     for family in families:
         # Find all the children in a family
         for child in family.children:
@@ -56,6 +57,33 @@ def check_valid(individuals: List[Individual], families: List[Family]):
                     # Append any errors we found to the top level error_statuses
                     for error_msg in temp_error_statuses:
                         error_statuses.append(error_msg)
+
+    # Building parent and grandparent lists.  Using families only, since any
+    #   individuals not in families don't have enough data to create the list.
+    #   Note that an individual must be a child, as well as a spouse, in a
+    #   family to find first cousins.
+    ancestor_dict: Dict[str, Ancestors] = {}
+    for family in families:
+        # Find all the children in a family and record their parents
+        for child in family.children:
+            if child not in ancestor_dict:
+                ancestor_dict[child] = Ancestors()
+            ancestor_dict[child].parents.append(family.hus_id)
+            ancestor_dict[child].parents.append(family.wife_id)
+
+    # Use the dictionary to find all grandparents of each individual in a family
+    for person in ancestor_dict:
+        for parent in ancestor_dict[person].parents:
+            if parent in ancestor_dict:
+                for grandparent in ancestor_dict[parent].parents:
+                    ancestor_dict[person].grandparents.append(grandparent)
+
+    # Check for married first cousins
+    for family in families:
+        temp_error_status = married_first_cousins(family, ancestor_dict)
+        # Append any errors we found to the top level error_statuses
+        if len(temp_error_status) > 0:
+            error_statuses.append(temp_error_status)
 
     return error_statuses
 
@@ -352,3 +380,47 @@ def list_of_recent_deaths(death_dates,individuals):
             if death < 30:
                 lstrecent_deaths.append(ind.name)
     return lstrecent_deaths
+
+
+# User story 19, first cousins should not marry
+def married_first_cousins(family : Family, ancestors : Ancestors):
+    my_error = ""
+    husband_grandparents = []
+    wife_grandparents = []
+    husband_parents = []
+    wife_parents = []
+    shared_grandparent_list = []
+    if family.wife_id in ancestors:
+        for w_parent in ancestors[family.wife_id].parents:
+            wife_parents.append(w_parent)
+        for w_grandparent in ancestors[family.wife_id].grandparents:
+            wife_grandparents.append(w_grandparent)
+    if family.hus_id in ancestors:
+        for h_parent in ancestors[family.hus_id].parents:
+            husband_parents.append(h_parent)
+        for h_grandparent in ancestors[family.hus_id].grandparents:
+            husband_grandparents.append(h_grandparent)
+
+    shared_grandparents = False
+    for h_grandparent in husband_grandparents:
+        for w_grandparent in wife_grandparents:
+            if h_grandparent == w_grandparent:
+                shared_grandparents = True
+                shared_grandparent_list.append(h_grandparent)
+
+    # Still need to make sure they're not actually siblings rather than cousins.
+    shared_parents = False
+    if shared_grandparents:
+        for h_parent in husband_parents:
+            for w_parent in wife_parents:
+                if h_parent == w_parent:
+                    shared_parents = True
+
+    if shared_grandparents and not shared_parents:
+        my_error = "Error: US#19: Husband " + family.hus_id + " and wife " + family.wife_id + " in family "
+        my_error = my_error + family.fam_id + " are first cousins who share the following grandparent(s):"
+        for grandparent_id in shared_grandparent_list:
+            my_error = my_error + " " + grandparent_id
+        my_error = my_error + ".\n"
+
+    return my_error
