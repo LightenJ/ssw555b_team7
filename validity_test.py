@@ -20,6 +20,7 @@ from datetime import date
 from data_classes import Individual, Ancestors
 from data_classes import Family
 from data_classes import Ancestors
+from dateutil import relativedelta
 from typing import List, Dict, Any
 
 
@@ -369,7 +370,7 @@ def list_of_recent_births(birth_dates,individuals):
                 lstrecent_birth.append(ind.name)
     return lstrecent_birth
 
-####US36####
+####US36 List all people in a GEDCOM file who died in the last 30 days####
 
 def list_of_recent_deaths(death_dates,individuals):
     lstrecent_deaths = []
@@ -380,6 +381,28 @@ def list_of_recent_deaths(death_dates,individuals):
             if death < 30:
                 lstrecent_deaths.append(ind.name)
     return lstrecent_deaths
+
+####US38 List all living people in a GEDCOM file whose birthdays occur in the next 30 days####
+
+def list_of_upcoming_birthdays(birth_dates,individuals):
+    lstupcoming_birthdays = []
+    thirtyDays = datetime.today() + relativedelta.relativedelta(days=30)
+    today = datetime.today()
+    for (births, ind) in zip(birth_dates, individuals):
+        if births is not None:
+            _date = convert_date(births)
+            if (thirtyDays.month == today.month):
+                if (thirtyDays.month == _date.month):
+                    if (today.day <= _date.day and thirtyDays.day >= _date.day):
+                        lstupcoming_birthdays.append(ind.name)
+            else:
+                if (today.month == _date.month):
+                    if (_date.day >= today.month):
+                        lstupcoming_birthdays.append(ind.name)
+                elif thirtyDays.month == _date.month:
+                    if (_date.day <= thirtyDays.day):
+                        lstupcoming_birthdays.append(ind.name)
+    return lstupcoming_birthdays
 
 
 # User story 19, first cousins should not marry

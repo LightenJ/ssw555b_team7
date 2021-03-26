@@ -215,6 +215,7 @@ try:
     print("\nUS31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
     print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))
     print("\nUS36 ==>List of recent deaths : \n", validity_test.list_of_recent_deaths(read_death_dates,individuals))
+    print("\nUS38 ==>List of upcoming Birthdays : \n", validity_test.list_of_upcoming_birthdays(read_birth_dates,individuals))
 except Exception as exception:
     print(exception)
 

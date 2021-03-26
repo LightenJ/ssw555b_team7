@@ -5,7 +5,7 @@ from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
 from validity_test import divorce_before_death, birth_before_marriage_of_parents
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
-from validity_test import correct_gender_for_role, married_first_cousins
+from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
 
@@ -141,6 +141,22 @@ class Test(TestCase):
         self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1")), False) #one Family duplicate ID's
         self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1", "I5")), False) #Individual and Family duplicate ID's
 
+    ####US36#####
+    # This test verifies that these individuals are dead within last 30 days or not
+    def test_list_of_recent_deaths(self):
+        self.assertTrue(list_of_recent_deaths("18 MAR 2021", "Geroge Frank"), "")
+        self.assertFalse(list_of_recent_deaths("5 MAY 2021", "Geroge Frank"), "")
+        self.assertTrue(list_of_recent_deaths("16 MAR 2021", "Geroge Frank"), "")
+        self.assertFalse(list_of_recent_deaths("5 APR 1985", "Fred Billiams"), "")
+
+    ####US38#####
+    # This test verifies that these individuals birthday is in next 30 days or not
+    def test_list_of_upcoming_birthdays(self):
+        self.assertTrue(list_of_upcoming_birthdays("6 may 2005", "Geroge Frank"), "")
+        self.assertFalse(list_of_upcoming_birthdays("5 APR 1790", "Stephen Sebast"), "")
+        self.assertTrue(list_of_upcoming_birthdays("6 MAY 1990", "Stephen Sebast"), "")
+        self.assertFalse(list_of_upcoming_birthdays("5 JAN 1885", "Fred Billiams"), "")
+        self.assertFalse(list_of_upcoming_birthdays("5 APR 1985", "Fred Billiams"), "")
 
     # User Story 21: Correct gender for role
     def test_correct_gender_for_role(self):
