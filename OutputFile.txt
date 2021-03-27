@@ -8,8 +8,8 @@ Individual ID and Name
 | I101 |    Future /Girl/     |  1 AUG 2021 |     None    |    None   |   None   |
 | I102 |    Present /Girl/    |  1 AUG 1985 |     None    |    None   |   None   |
 | I103 |   LateBirth /Girl/   |  1 AUG 2020 |  1 AUG 2000 |    None   |   None   |
-| I104 |     Clone /001/      |  1 APR 2020 |     None    |    None   |   None   |
-| I105 |    Frank /George/    |  1 MAR 2021 |  5 MAR 2021 |    None   |   None   |
+| I104 |     Clone /001/      |  1 MAR 2021 |     None    |    None   |   None   |
+| I104 |     Clone /002/      |  1 MAR 2021 |  5 MAR 2021 |    None   |   None   |
 | I11  |  Jill /Farstrider/   | 10 MAY 1960 |     None    |     F5    |   None   |
 | I12  |   Fred /Billiams/    |  1 APR 1991 |     None    |    None   |    F5    |
 | I13  |    Mark /Sebast/     | 10 MAY 1955 |     None    |     F2    |   None   |
@@ -17,24 +17,6 @@ Individual ID and Name
 | I15  |    Sarah /Sebast/    | 15 OCT 1982 |     None    |    None   |    F2    |
 | I16  |    Eric /Sebast/     |  5 AUG 1784 | 12 NOV 2020 |    None   |    F2    |
 |  I2  |   Nancy /Williams/   |  1 JAN 1978 |     None    |     F1    |    F3    |
-| I200 |     Tom /Riddle/     |  5 OCT 1970 |     None    |    F105   |   None   |
-| I201 |   Martha /Riddle/    |  5 OCT 1978 |     None    |    F105   |   None   |
-| I202 |    Jimmy /Riddle/    | 12 DEC 1990 |     None    |    None   |   F105   |
-| I202 |    Ryan /Riddle/     | 12 DEC 2018 |     None    |    None   |   F105   |
-| I203 |     Ron /Riddle/     | 12 DEC 1992 |     None    |    None   |   F105   |
-| I204 |   Hagrid /Riddle/    | 12 DEC 1993 |     None    |    None   |   F105   |
-| I205 |   Robert /Riddle/    | 12 DEC 1995 |     None    |    None   |   F105   |
-| I206 |    Brad /Riddle/     | 12 Nov 1997 |     None    |    None   |   F105   |
-| I207 |    Julia /Riddle/    | 10 DEC 1999 |     None    |    None   |   F105   |
-| I208 |    Mike /Riddle/     | 12 DEC 1999 |     None    |    None   |   F105   |
-| I209 |    James /Riddle/    | 12 DEC 2001 |     None    |    None   |   F105   |
-| I210 |  Cathrine /Riddle/   | 12 DEC 2003 |     None    |    None   |   F105   |
-| I211 |    Anna /Riddle/     | 12 DEC 2006 |     None    |    None   |   F105   |
-| I212 |    Peter /Riddle/    | 12 DEC 2007 |     None    |    None   |   F105   |
-| I213 |    Jack /Riddle/     | 12 DEC 2008 |     None    |    None   |   F105   |
-| I214 |   Jaimie /Riddle/    | 12 DEC 2010 |     None    |    None   |   F105   |
-| I215 |    Jenny /Riddle/    | 12 DEC 2012 |     None    |    None   |   F105   |
-| I216 |    Tommy /Riddle/    | 12 DEC 2015 |     None    |    None   |   F105   |
 |  I3  |   Stephen /Sebast/   | 10 APR 2011 |     None    |    None   |    F1    |
 |  I4  |  Zachariah /Sebast/  | 16 DEC 2006 |     None    |    F102   |    F1    |
 | I49  |   Bill /Williams/    |  8 JUN 1980 |     None    |    F101   |   None   |
@@ -46,20 +28,19 @@ Individual ID and Name
 |  I9  |   Gerri /Williams/   | 10 JUN 1982 |     None    |    None   |    F3    |
 +------+----------------------+-------------+-------------+-----------+----------+
  Family info 
- +------+--------------------+----------------------+---------------------------------------------------------------------------------+
-|  ID  |    Husband Name    |      Wife Name       |                                     CHILD ID                                    |
-+------+--------------------+----------------------+---------------------------------------------------------------------------------+
-|  F1  | Jonathan /Sebast/  |   Nancy /Williams/   |                                     I3,I4,I5                                    |
-| F100 |    Born /Early/    |   LateBirth /Girl/   |                                                                                 |
-| F102 | Zachariah /Sebast/ |   Susan /Williams/   |                                                                                 |
-| F103 |  Bill /Williams/   |  Regena /Williams/   |                                       I50                                       |
-| F104 | Jonathan /Sebast/  |    Sarah /Sebast/    |                                                                                 |
-| F105 |    Tom /Riddle/    |   Martha /Riddle/    | I202,I203,I204,I205,I206,I207,I208,I209,I210,I211,I212,I213,I214,I215,I216,I217 |
-|  F2  |   Mark /Sebast/    | Constance /McKenzie/ |                                    I1,I15,I16                                   |
-|  F3  | Timothy /Williams/ |    Donna /Doubet/    |                                    I2,I9,I10                                    |
-|  F4  |   Donna /Doubet/   |  Buffalo /Billiams/  |                                                                                 |
-|  F5  | Buffalo /Billiams/ |  Jill /Farstrider/   |                                       I12                                       |
-+------+--------------------+----------------------+---------------------------------------------------------------------------------+
+ +------+--------------------+----------------------+------------+
+|  ID  |    Husband Name    |      Wife Name       |  CHILD ID  |
++------+--------------------+----------------------+------------+
+|  F1  | Jonathan /Sebast/  |   Nancy /Williams/   |  I3,I4,I5  |
+| F100 |    Born /Early/    |   LateBirth /Girl/   |            |
+| F101 |                    |   LateBirth /Girl/   |            |
+| F102 | Zachariah /Sebast/ |   Susan /Williams/   |            |
+| F103 |  Bill /Williams/   |  Regena /Williams/   |    I50     |
+|  F2  |   Mark /Sebast/    | Constance /McKenzie/ | I1,I15,I16 |
+|  F3  | Timothy /Williams/ |    Donna /Doubet/    | I2,I9,I10  |
+|  F4  |   Donna /Doubet/   |  Buffalo /Billiams/  |            |
+|  F5  | Buffalo /Billiams/ |  Jill /Farstrider/   |    I12     |
++------+--------------------+----------------------+------------+
 
 US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is : False
 Error: US#04: Family: Married before divorce date.
@@ -88,29 +69,34 @@ Error: US#10: LateBirth /Girl/ was married when younger than 14.
 
 Warning: US#21: LateBirth /Girl/ is a spouse in family F100, but that person's gender is unknown.
 
-Error: US#10: Martha /Riddle/ was married when younger than 14.
+Error: US#02: Individual LateBirth /Girl/ was married before they were born.
+
+Error: US#10: LateBirth /Girl/ was married when younger than 14.
+
+Warning: US#21: LateBirth /Girl/ is a spouse in family F101, but that person's gender is unknown.
 
 Error: US#08: Eric /Sebast/ was born before his/her parents were married.
 
 Error: US#19: Husband I4 and wife I50 in family F102 are first cousins who share the following grandparent(s): I6 I7.
 
-Error: US#18: Husband I1 and wife I15 in family F104 are married siblings who share the same parent(s): I13 I14.
-
-Error: US15: Family: F105 has 15 or more sibliangs
 
 US22 ==> ALL IDs Unique ?: False
 
+US23 ==> Duplicate name and birth date: []
+
+US24 ==> Unique families by spouses: []
+
 US30 ==> List of living married is : 
- ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/', 'Tom /Riddle/', 'Martha /Riddle/']
+ ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/']
 
 US31 ==> List of living single is : 
- ['Stephen /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/', 'Jimmy /Riddle/', 'Ron /Riddle/', 'Hagrid /Riddle/', 'Robert /Riddle/', 'Brad /Riddle/', 'Julia /Riddle/', 'Mike /Riddle/', 'James /Riddle/', 'Cathrine /Riddle/', 'Anna /Riddle/', 'Peter /Riddle/', 'Jack /Riddle/', 'Jaimie /Riddle/', 'Jenny /Riddle/', 'Tommy /Riddle/', 'Ryan /Riddle/']
+ ['Stephen /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/']
 
 US35 ==>List of recent births : 
- ['Frank /George/']
+ ['Clone /001/', 'Clone /002/']
 
 US36 ==>List of recent deaths : 
- ['Frank /George/']
+ ['Clone /002/']
 
 US38 ==>List of upcoming Birthdays : 
- ['Stephen /Sebast/', 'Fred /Billiams/', 'Clone /001/']
+ ['Stephen /Sebast/', 'Fred /Billiams/']
