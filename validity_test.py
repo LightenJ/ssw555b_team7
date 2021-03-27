@@ -85,6 +85,17 @@ def check_valid(individuals: List[Individual], families: List[Family]):
         # Append any errors we found to the top level error_statuses
         if len(temp_error_status) > 0:
             error_statuses.append(temp_error_status)
+            
+    # check for married siblings
+    for family in families:
+        temp_error_status = us18_siblings_shud_not_marry(family, ancestor_dict)
+        if len(temp_error_status) > 0:
+            error_statuses.append(temp_error_status)
+
+    for family in families:
+        temp_error_status = us15_fewer_than_15_siblings(family)
+        if len(temp_error_status) > 0:
+            error_statuses.append(temp_error_status)
 
     return error_statuses
 
@@ -445,5 +456,43 @@ def married_first_cousins(family : Family, ancestors : Ancestors):
         for grandparent_id in shared_grandparent_list:
             my_error = my_error + " " + grandparent_id
         my_error = my_error + ".\n"
+
+    return my_error
+
+# User story 18, siblings should not marry
+def us18_siblings_shud_not_marry(family : Family, ancestors : Ancestors):
+    my_error = ""
+    husband_parents = []
+    wife_parents = []
+    shared_parents_list = []
+    if family.wife_id in ancestors:
+        for w_parent in ancestors[family.wife_id].parents:
+            wife_parents.append(w_parent)
+
+    if family.hus_id in ancestors:
+        for h_parent in ancestors[family.hus_id].parents:
+            husband_parents.append(h_parent)
+
+    shared_parents = False
+    for h_parent in husband_parents:
+        for w_parent in wife_parents:
+            if h_parent == w_parent:
+                shared_parents = True
+                shared_parents_list.append(h_parent)
+
+    if shared_parents:
+        my_error = "Error: US#18: Husband " + family.hus_id + " and wife " + family.wife_id + " in family "
+        my_error = my_error + family.fam_id + " are married siblings who share the same parent(s):"
+        for parent_id in shared_parents_list:
+            my_error = my_error + " " + parent_id
+        my_error = my_error + ".\n"
+
+    return my_error
+
+# User story 15, fewer than 15 siblings
+def us15_fewer_than_15_siblings(family):
+    my_error = ""
+    if len(family.children) >= 15:
+        my_error = "Error: US15: Family: " + family.fam_id + " has 15 or more siblings"
 
     return my_error
