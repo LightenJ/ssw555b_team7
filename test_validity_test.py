@@ -285,4 +285,8 @@ class Test(TestCase):
                            "CHIL9", "CHIL10", "CHIL11", "CHIL12", "CHIL13", "CHIL14", "CHIL15", "CHIL16", ]
 
         self.assertTrue(us15_fewer_than_15_siblings(family), "")
+        
+        family = Family("FAM002")
+        family.children = ["CHIL1", "CHIL2", "CHIL3", "CHIL4", "CHIL5"]
+        self.assertFalse(us15_fewer_than_15_siblings(family), "")
 
