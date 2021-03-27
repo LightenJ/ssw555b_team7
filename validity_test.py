@@ -339,30 +339,37 @@ def unique_ids (ids_list):
         valid = True
     return valid
 
-####US23##### Unique name and birth date
-def unique_name_and_birth_date(individuals):
+def get_duplicate(test_list):
     unique =[]
     duplicate =[]
-    name_birth_d = []
-
-    for ind in individuals:
-        name_birth_d.append((ind.name, ind.birth_d))
-    for element in name_birth_d:
+    for element in test_list:
         if element in unique:
             duplicate.append(element)
         else:
             unique.append(element)
     return duplicate
 
+####US23##### Unique name and birth date
+def unique_name_and_birth_date(individuals):
+    name_birth_d = []
+
+    for ind in individuals:
+        name_birth_d.append((ind.name, ind.birth_d))
+    return get_duplicate(name_birth_d)
+
 ####US24##### Unique families by spouses
-def unique_families_by_spouses(families):
+def unique_families_by_spouses(individuals, families):
     spouse_name_marr_d = []
+    for f in families:
+        if f.marriage_d:
+            marriage_d = f.marriage_d
+            for i in individuals:
+                if f.wife_id == i.ind_id:
+                    wife_name = i.name
+        spouse_name_marr_d.append((marriage_d, wife_name))
 
-    for fam in families:
-        spouse_name_marr_d.append((fam.hus_id, fam.marriage_d))
-
-
-
+    duplicate= get_duplicate(spouse_name_marr_d)
+    return duplicate
 
 ####US30####
 

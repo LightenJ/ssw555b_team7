@@ -2,7 +2,7 @@
 from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage, unique_name_and_birth_date
-from validity_test import birthbeforedeath
+from validity_test import birthbeforedeath, unique_families_by_spouses
 from validity_test import divorce_before_death, birth_before_marriage_of_parents
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
 from validity_test import correct_gender_for_role, married_first_cousins
@@ -156,7 +156,7 @@ class Test(TestCase):
 
         self.assertEqual(unique_name_and_birth_date(ind), [])#different Name but same date of birth
 
-        ind4 = Individual("I03")
+        ind4 = Individual("I04")
         ind4.name = 'Test1'
         ind4.birth_d = '27 OCT 1980'
         ind.append(ind4)
@@ -169,6 +169,34 @@ class Test(TestCase):
         ind.append(ind3)
         self.assertEqual(unique_name_and_birth_date(ind), [('emay', '27 OCT 1983')]) #Duplicate Name and date of birth
 
+    ####US24##### Unique families by spouses
+    def test_unique_families_by_spouses(self):
+        ind = []
+        fam = []
+        ind1 = Individual("I01")
+        ind1.name = 'HUS1'
+        ind2 = Individual("I02")
+        ind2.name = 'WIFE1'
+        ind3 = Individual("I03")
+        ind3.name = 'HUS2'
+        ind4 = Individual("I04")
+        ind4.name = 'WIFE2'
+        fam1 = Family('F01')
+        fam1.hus_id = 'I01'
+        fam1.wife_id = 'I02'
+        fam1.marriage_d = '22 FEB 2013'
+        fam2 = Family('F02')
+        fam2.hus_id = 'I03'
+        fam2.wife_id = 'I04'
+        fam2.marriage_d = '23 FEB 2013'
+        fam3 = Family('F03')
+        fam3.hus_id = 'I01'
+        fam3.wife_id = 'I02'
+        fam3.marriage_d = '22 FEB 2013'
+        self.assertEqual(unique_families_by_spouses((ind1, ind2, ind3, ind4), (fam1, fam2)), [])#
+        self.assertEqual(unique_families_by_spouses((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [('22 FEB 2013', 'WIFE1')])#
+        fam3.marriage_d = '23 FEB 2013'
+        self.assertEqual(unique_families_by_spouses((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [])#
 
     # User Story 21: Correct gender for role
     def test_correct_gender_for_role(self):

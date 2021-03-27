@@ -84,7 +84,7 @@ US22 ==> ALL IDs Unique ?: False
 
 US23 ==> Duplicate name and birth date: []
 
-US24 ==> Unique families by spouses: None
+US24 ==> Unique families by spouses: []
 
 US30 ==> List of living married is : 
  ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/']
