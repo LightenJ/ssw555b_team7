@@ -3,7 +3,7 @@ from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage
 from validity_test import birthbeforedeath
-from validity_test import divorce_before_death, birth_before_marriage_of_parents
+from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths
 from datetime import datetime, timedelta
@@ -245,3 +245,44 @@ class Test(TestCase):
         # Shared grandparent but same parents
         ancestor_dict[family.wife_id].parents = {"MOM2", "DAD1"}
         self.assertEqual(married_first_cousins(family, ancestor_dict), "")
+        
+        
+     # User Story 18: us18_siblings_shud_not_marry
+    def test_us18_siblings_shud_not_marry(self):
+        ancestor_dict: Dict[str, Ancestors] = {}
+        family = Family("FAM001")
+        family.fam_id = "FAM01"
+        family.wife_id = "WIFE01"
+        family.hus_id = "HUS01"
+
+        # No ancestors exist
+        self.assertEqual(us18_siblings_shud_not_marry(family, ancestor_dict), "")
+
+        # Only parents known
+        ancestor_dict[family.wife_id] = Ancestors()
+        ancestor_dict[family.wife_id].parents = {"MOM1", "DAD1"}
+        ancestor_dict[family.hus_id] = Ancestors()
+        ancestor_dict[family.hus_id].parents = {"MOM2", "DAD2"}
+        self.assertEqual(us18_siblings_shud_not_marry(family, ancestor_dict), "")
+
+        # Unrelated grandparents
+        ancestor_dict[family.wife_id].grandparents = {"GMA1", "GPA1", "GMA2", "GPA2"}
+        ancestor_dict[family.hus_id].grandparents = {"GMA3", "GPA3", "GMA4", "GPA4"}
+        self.assertEqual(us18_siblings_shud_not_marry(family, ancestor_dict), "")
+
+        # # One shared grandparent
+        # ancestor_dict[family.wife_id].grandparents = {"GMA3", "GPA1", "GMA2", "GPA2"}
+        # self.assertNotEqual(us18_siblings_shud_not_marry(family, ancestor_dict), "")
+
+        # Shared grandparent but same parents
+        ancestor_dict[family.wife_id].parents = {"MOM1", "DAD1"}
+        self.assertEqual(us18_siblings_shud_not_marry(family, ancestor_dict), "")
+
+    # User Story 15: us15_fewer_than_15_siblings
+    def test_us15_fewer_than_15_siblings(self):
+        family = Family("FAM001")
+        family.children = ["CHIL1", "CHIL2", "CHIL3", "CHIL4", "CHIL5", "CHIL6", "CHIL7", "CHIL8",
+                           "CHIL9", "CHIL10", "CHIL11", "CHIL12", "CHIL13", "CHIL14", "CHIL15", "CHIL16", ]
+
+        self.assertTrue(us15_fewer_than_15_siblings(family), "")
+
