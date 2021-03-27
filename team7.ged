@@ -92,6 +92,16 @@
 2 DATE 2 JAN 1952
 1 FAMS @F4@
 1 FAMS @F5@
+0 @I8B@ INDI
+1 NAME Buffalo /Billiams/
+2 GIVN Buffalo
+2 SURN Billiams
+2 _MARNM Billiams
+1 SEX M
+1 BIRT
+2 DATE 2 JAN 1952
+1 FAMS @F4@
+1 FAMS @F5@
 0 @I9@ INDI
 1 NAME Gerri /Williams/
 2 GIVN Gerri
@@ -470,6 +480,16 @@
 2 PLAC Cedar Rapids, Iowa
 1 _CURRENT Y
 0 @F2@ FAM
+1 HUSB @I13@
+1 WIFE @I14@
+1 CHIL @I1@
+1 CHIL @I15@
+1 CHIL @I16@
+1 MARR
+2 DATE 1 JAN 1978
+2 PLAC Somewhere
+1 _CURRENT Y
+0 @F2B@ FAM
 1 HUSB @I13@
 1 WIFE @I14@
 1 CHIL @I1@
