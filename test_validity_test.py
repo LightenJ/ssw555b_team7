@@ -4,7 +4,7 @@ from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage, unique_name_and_birth_date
 from validity_test import birthbeforedeath, unique_families_by_spouses
 from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings
-from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
+from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
