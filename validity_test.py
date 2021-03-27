@@ -29,7 +29,6 @@ def check_valid(individuals: List[Individual], families: List[Family]):
     individual: Individual
     for individual in individuals:
         temp_error_statuses = check_valid_individual(individual)
-
         # Append any errors we found to the top level error_statuses
         for error_msg in temp_error_statuses:
             error_statuses.append(error_msg)
@@ -127,6 +126,7 @@ def check_valid_individual_spouse(individual: Individual, family: Family):
     death_date = individual.death_d
     marriage_date = family.marriage_d
     divorce_date = family.divorce_d
+
     error_text = birthbeforemarriage(birth_date, marriage_date, my_full_name)
     if len(error_text) > 0:
         error_statuses.append(error_text)
@@ -338,6 +338,31 @@ def unique_ids (ids_list):
     if not duplicate:
         valid = True
     return valid
+
+####US23##### Unique name and birth date
+def unique_name_and_birth_date(individuals):
+    unique =[]
+    duplicate =[]
+    name_birth_d = []
+
+    for ind in individuals:
+        name_birth_d.append((ind.name, ind.birth_d))
+    for element in name_birth_d:
+        if element in unique:
+            duplicate.append(element)
+        else:
+            unique.append(element)
+    return duplicate
+
+####US24##### Unique families by spouses
+def unique_families_by_spouses(families):
+    spouse_name_marr_d = []
+
+    for fam in families:
+        spouse_name_marr_d.append((fam.hus_id, fam.marriage_d))
+
+
+
 
 ####US30####
 

@@ -211,6 +211,8 @@ try:
     for error in error_text:
         print(error)
     print("\nUS22 ==> ALL IDs Unique ?:", validity_test.unique_ids(ids_list))
+    print("\nUS23 ==> Duplicate name and birth date:", validity_test.unique_name_and_birth_date(individuals))
+    print("\nUS24 ==> Unique families by spouses:", validity_test.unique_families_by_spouses(families))
     print("\nUS30 ==> List of living married is : \n", validity_test.list_of_living_married(individuals))
     print("\nUS31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
     print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))

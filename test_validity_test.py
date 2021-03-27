@@ -1,7 +1,7 @@
 
 from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
-from validity_test import birthbeforemarriage
+from validity_test import birthbeforemarriage, unique_name_and_birth_date
 from validity_test import birthbeforedeath
 from validity_test import divorce_before_death, birth_before_marriage_of_parents
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death
@@ -141,6 +141,34 @@ class Test(TestCase):
         self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1")), False) #one Family duplicate ID's
         self.assertEqual(unique_ids(("I1", "I5", "F1", "F5", "F1", "I5")), False) #Individual and Family duplicate ID's
 
+    ####US23##### Unique name and birth date
+    def test_unique_name_and_birth_date(self):
+        ind = []
+
+        ind1 = Individual("I01")
+        ind1.name = 'emay'
+        ind1.birth_d = '27 OCT 1983'
+        ind.append(ind1)
+        ind2 = Individual("I02")
+        ind2.name = 'Test'
+        ind2.birth_d = '27 OCT 1983'
+        ind.append(ind2)
+
+        self.assertEqual(unique_name_and_birth_date(ind), [])#different Name but same date of birth
+
+        ind4 = Individual("I03")
+        ind4.name = 'Test1'
+        ind4.birth_d = '27 OCT 1980'
+        ind.append(ind4)
+
+        self.assertEqual(unique_name_and_birth_date(ind), [])#different name  and different date of birth
+
+        ind3 = Individual("I03")
+        ind3.name = 'emay'
+        ind3.birth_d = '27 OCT 1983'
+        ind.append(ind3)
+        self.assertEqual(unique_name_and_birth_date(ind), [('emay', '27 OCT 1983')]) #Duplicate Name and date of birth
+
 
     # User Story 21: Correct gender for role
     def test_correct_gender_for_role(self):
@@ -200,7 +228,7 @@ class Test(TestCase):
     # User Story 19: Married first cousins
     def test_married_first_cousins(self):
 
-        ancestor_dict: Dict[str, Ancestors] = {}
+        ancestor_dict: dict[str, Ancestors] = {}
         family = Family("FAM001")
 
         family.fam_id = "FAM01"
