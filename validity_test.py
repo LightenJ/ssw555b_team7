@@ -105,8 +105,21 @@ def convert_date(input_date: str):
         converted_date = datetime.strptime(input_date, '%d %b %Y')
     except ValueError:
         converted_date = None
+    except TypeError:
+        converted_date = None
 
     return converted_date
+
+
+def get_age(ind : Individual):
+    return_value = "Unknown"
+    birth_date = convert_date(ind.birth_d)
+    end_date = convert_date(ind.death_d)
+    if end_date is None:
+        end_date = date.today()
+    if birth_date is not None:
+        return_value = year_difference(end_date, birth_date)
+    return return_value
 
 
 def date_is_invalid(input_date: str):
@@ -527,3 +540,4 @@ def us15_fewer_than_15_siblings(family):
         my_error = "Error: US15: Family: " + family.fam_id + " has 15 or more siblings"
 
     return my_error
+

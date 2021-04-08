@@ -22,6 +22,7 @@ from prettytable import PrettyTable
 import validity_test
 from data_classes import Individual
 from data_classes import Family
+from validity_test import get_age
 
 print('Enter file name with extension when prompted  e.g : test.ged \n')
 
@@ -46,7 +47,7 @@ Tag_Level = {
     'NOTE': 0}
 
 
-Ind = PrettyTable(["ID", "NAME","BIRTH DATE","DEATH DATE","SPOUSE ID","CHILD ID"])
+Ind = PrettyTable(["ID", "NAME","BIRTH DATE","DEATH DATE","SPOUSE ID","CHILD ID","AGE"])
 Fam = PrettyTable(["ID", "Husband Name", "Wife Name", "CHILD ID"])
 ind = []
 fam = []
@@ -57,6 +58,7 @@ read_dates = []
 ids_list =[]
 read_birth_dates = []
 read_death_dates = []
+
 
 def data_match(splitline):
     data_found = False
@@ -154,9 +156,8 @@ def find_str(read_lines):
             extract_family_info(read_lines, line_no, Family(splitline[2]))
         line_no += 1
 
-
     for ind in individuals:
-        Ind.add_row([ind.ind_id, ind.name,ind.birth_d,ind.death_d,ind.spouse_id,ind.child_id])
+        Ind.add_row([ind.ind_id, ind.name,ind.birth_d,ind.death_d,ind.spouse_id,ind.child_id,get_age(ind)])
         ind_list.append((ind.ind_id, ind.name))
         read_dates.append(ind.birth_d)
         read_dates.append(ind.death_d)
@@ -202,8 +203,7 @@ except:
 try:
     find_str(read_lines)
     fhand.close()  # Close the file
-except:
-    print('Processing failure')
+except Exception as e: print(e)
 
 try:
     print("\nUS01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is :", validity_test.date_before(read_dates))

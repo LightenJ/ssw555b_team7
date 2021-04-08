@@ -1,51 +1,51 @@
 Individual ID and Name 
- +------+----------------------+-------------+-------------+-----------+----------+
-|  ID  |         NAME         |  BIRTH DATE |  DEATH DATE | SPOUSE ID | CHILD ID |
-+------+----------------------+-------------+-------------+-----------+----------+
-|  I1  |  Jonathan /Sebast/   | 12 DEC 1980 |     None    |     F1    |    F2    |
-| I10  |  Regena /Williams/   |  3 JUN 1980 |     None    |    F101   |    F3    |
-| I100 |     Born /Early/     |  1 JAN 1948 |  1 AUG 1947 |    None   |   None   |
-| I101 |    Future /Girl/     |  1 AUG 2021 |     None    |    None   |   None   |
-| I102 |    Present /Girl/    |  1 AUG 1985 |     None    |    None   |   None   |
-| I103 |   LateBirth /Girl/   |  1 AUG 2020 |  1 AUG 2000 |    None   |   None   |
-| I104 |     Clone /001/      |  1 APR 2020 |     None    |    None   |   None   |
-| I105 |    Frank /George/    |  1 MAR 2021 |  5 MAR 2021 |    None   |   None   |
-| I11  |  Jill /Farstrider/   | 10 MAY 1960 |     None    |     F5    |   None   |
-| I12  |   Fred /Billiams/    |  1 APR 1991 |     None    |    None   |    F5    |
-| I13  |    Mark /Sebast/     | 10 MAY 1955 |     None    |     F2    |   None   |
-| I14  | Constance /McKenzie/ | 10 JAN 1952 |     None    |     F2    |   None   |
-| I15  |    Sarah /Sebast/    | 15 OCT 1982 |     None    |    None   |    F2    |
-| I16  |    Eric /Sebast/     |  5 AUG 1784 | 12 NOV 2020 |    None   |    F2    |
-|  I2  |   Nancy /Williams/   |  1 JAN 1978 |     None    |     F1    |    F3    |
-| I200 |     Tom /Riddle/     |  5 OCT 1970 |     None    |    F105   |   None   |
-| I201 |   Martha /Riddle/    |  5 OCT 1978 |     None    |    F105   |   None   |
-| I202 |    Jimmy /Riddle/    | 12 DEC 1990 |     None    |    None   |   F105   |
-| I202 |    Ryan /Riddle/     | 12 DEC 2018 |     None    |    None   |   F105   |
-| I203 |     Ron /Riddle/     | 12 DEC 1992 |     None    |    None   |   F105   |
-| I204 |   Hagrid /Riddle/    | 12 DEC 1993 |     None    |    None   |   F105   |
-| I205 |   Robert /Riddle/    | 12 DEC 1995 |     None    |    None   |   F105   |
-| I206 |    Brad /Riddle/     | 12 Nov 1997 |     None    |    None   |   F105   |
-| I207 |    Julia /Riddle/    | 10 DEC 1999 |     None    |    None   |   F105   |
-| I208 |    Mike /Riddle/     | 12 DEC 1999 |     None    |    None   |   F105   |
-| I209 |    James /Riddle/    | 12 DEC 2001 |     None    |    None   |   F105   |
-| I210 |  Cathrine /Riddle/   | 12 DEC 2003 |     None    |    None   |   F105   |
-| I211 |    Anna /Riddle/     | 12 DEC 2006 |     None    |    None   |   F105   |
-| I212 |    Peter /Riddle/    | 12 DEC 2007 |     None    |    None   |   F105   |
-| I213 |    Jack /Riddle/     | 12 DEC 2008 |     None    |    None   |   F105   |
-| I214 |   Jaimie /Riddle/    | 12 DEC 2010 |     None    |    None   |   F105   |
-| I215 |    Jenny /Riddle/    | 12 DEC 2012 |     None    |    None   |   F105   |
-| I216 |    Tommy /Riddle/    | 12 DEC 2015 |     None    |    None   |   F105   |
-|  I3  |   Stephen /Sebast/   | 10 APR 2011 |     None    |    None   |    F1    |
-|  I4  |  Zachariah /Sebast/  | 16 DEC 2006 |     None    |    F102   |    F1    |
-| I49  |   Bill /Williams/    |  8 JUN 1980 |     None    |    F101   |   None   |
-|  I5  |   Abigail /Sebast/   | 12 OCT 2008 |     None    |    None   |    F1    |
-| I50  |   Susan /Williams/   |  3 JUN 2005 |     None    |    F102   |   F101   |
-|  I6  |  Timothy /Williams/  |  1 JAN 1950 |  1 AUG 2019 |     F3    |   None   |
-|  I7  |    Donna /Doubet/    |  1 JAN 1948 |     None    |     F4    |   None   |
-|  I8  |  Buffalo /Billiams/  |  2 JAN 1952 |     None    |     F5    |   None   |
-| I8B  |  Buffalo /Billiams/  |  2 JAN 1952 |     None    |     F5    |   None   |
-|  I9  |   Gerri /Williams/   | 10 JUN 1982 |     None    |    None   |    F3    |
-+------+----------------------+-------------+-------------+-----------+----------+
+ +------+----------------------+-------------+-------------+-----------+----------+-----+
+|  ID  |         NAME         |  BIRTH DATE |  DEATH DATE | SPOUSE ID | CHILD ID | AGE |
++------+----------------------+-------------+-------------+-----------+----------+-----+
+|  I1  |  Jonathan /Sebast/   | 12 DEC 1980 |     None    |     F1    |    F2    |  40 |
+| I10  |  Regena /Williams/   |  3 JUN 1980 |     None    |    F101   |    F3    |  40 |
+| I100 |     Born /Early/     |  1 JAN 1948 |  1 AUG 1947 |    None   |   None   |  -1 |
+| I101 |    Future /Girl/     |  1 AUG 2021 |     None    |    None   |   None   |  -1 |
+| I102 |    Present /Girl/    |  1 AUG 1985 |     None    |    None   |   None   |  35 |
+| I103 |   LateBirth /Girl/   |  1 AUG 2020 |  1 AUG 2000 |    None   |   None   | -20 |
+| I104 |     Clone /001/      |  1 APR 2020 |     None    |    None   |   None   |  1  |
+| I105 |    Frank /George/    |  1 MAR 2021 |  5 MAR 2021 |    None   |   None   |  0  |
+| I11  |  Jill /Farstrider/   | 10 MAY 1960 |     None    |     F5    |   None   |  60 |
+| I12  |   Fred /Billiams/    |  1 APR 1991 |     None    |    None   |    F5    |  30 |
+| I13  |    Mark /Sebast/     | 10 MAY 1955 |     None    |     F2    |   None   |  65 |
+| I14  | Constance /McKenzie/ | 10 JAN 1952 |     None    |     F2    |   None   |  69 |
+| I15  |    Sarah /Sebast/    | 15 OCT 1982 |     None    |    None   |    F2    |  38 |
+| I16  |    Eric /Sebast/     |  5 AUG 1784 | 12 NOV 2020 |    None   |    F2    | 236 |
+|  I2  |   Nancy /Williams/   |  1 JAN 1978 |     None    |     F1    |    F3    |  43 |
+| I200 |     Tom /Riddle/     |  5 OCT 1970 |     None    |    F105   |   None   |  50 |
+| I201 |   Martha /Riddle/    |  5 OCT 1978 |     None    |    F105   |   None   |  42 |
+| I202 |    Jimmy /Riddle/    | 12 DEC 1990 |     None    |    None   |   F105   |  30 |
+| I202 |    Ryan /Riddle/     | 12 DEC 2018 |     None    |    None   |   F105   |  2  |
+| I203 |     Ron /Riddle/     | 12 DEC 1992 |     None    |    None   |   F105   |  28 |
+| I204 |   Hagrid /Riddle/    | 12 DEC 1993 |     None    |    None   |   F105   |  27 |
+| I205 |   Robert /Riddle/    | 12 DEC 1995 |     None    |    None   |   F105   |  25 |
+| I206 |    Brad /Riddle/     | 12 Nov 1997 |     None    |    None   |   F105   |  23 |
+| I207 |    Julia /Riddle/    | 10 DEC 1999 |     None    |    None   |   F105   |  21 |
+| I208 |    Mike /Riddle/     | 12 DEC 1999 |     None    |    None   |   F105   |  21 |
+| I209 |    James /Riddle/    | 12 DEC 2001 |     None    |    None   |   F105   |  19 |
+| I210 |  Cathrine /Riddle/   | 12 DEC 2003 |     None    |    None   |   F105   |  17 |
+| I211 |    Anna /Riddle/     | 12 DEC 2006 |     None    |    None   |   F105   |  14 |
+| I212 |    Peter /Riddle/    | 12 DEC 2007 |     None    |    None   |   F105   |  13 |
+| I213 |    Jack /Riddle/     | 12 DEC 2008 |     None    |    None   |   F105   |  12 |
+| I214 |   Jaimie /Riddle/    | 12 DEC 2010 |     None    |    None   |   F105   |  10 |
+| I215 |    Jenny /Riddle/    | 12 DEC 2012 |     None    |    None   |   F105   |  8  |
+| I216 |    Tommy /Riddle/    | 12 DEC 2015 |     None    |    None   |   F105   |  5  |
+|  I3  |   Stephen /Sebast/   | 10 APR 2011 |     None    |    None   |    F1    |  9  |
+|  I4  |  Zachariah /Sebast/  | 16 DEC 2006 |     None    |    F102   |    F1    |  14 |
+| I49  |   Bill /Williams/    |  8 JUN 1980 |     None    |    F101   |   None   |  40 |
+|  I5  |   Abigail /Sebast/   | 12 OCT 2008 |     None    |    None   |    F1    |  12 |
+| I50  |   Susan /Williams/   |  3 JUN 2005 |     None    |    F102   |   F101   |  15 |
+|  I6  |  Timothy /Williams/  |  1 JAN 1950 |  1 AUG 2019 |     F3    |   None   |  69 |
+|  I7  |    Donna /Doubet/    |  1 JAN 1948 |     None    |     F4    |   None   |  73 |
+|  I8  |  Buffalo /Billiams/  |  2 JAN 1952 |     None    |     F5    |   None   |  69 |
+| I8B  |  Buffalo /Billiams/  |  2 JAN 1952 |     None    |     F5    |   None   |  69 |
+|  I9  |   Gerri /Williams/   | 10 JUN 1982 |     None    |    None   |    F3    |  38 |
++------+----------------------+-------------+-------------+-----------+----------+-----+
  Family info 
  +------+--------------------+----------------------+---------------------------------------------------------------------------------+
 |  ID  |    Husband Name    |      Wife Name       |                                     CHILD ID                                    |
@@ -106,7 +106,7 @@ US22 ==> ALL IDs Unique ?: False
 
 US23 ==> Duplicate name and birth date: [('Buffalo /Billiams/', '2 JAN 1952')]
 
-US24 ==> Unique families by spouses: [('1 JAN 1978', 'Constance /McKenzie/')]
+US24 ==> Duplicate families by spouses: [('1 JAN 1978', 'Constance /McKenzie/')]
 
 US30 ==> List of living married is : 
  ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/', 'Tom /Riddle/', 'Martha /Riddle/']
@@ -115,10 +115,10 @@ US31 ==> List of living single is :
  ['Stephen /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/', 'Jimmy /Riddle/', 'Ron /Riddle/', 'Hagrid /Riddle/', 'Robert /Riddle/', 'Brad /Riddle/', 'Julia /Riddle/', 'Mike /Riddle/', 'James /Riddle/', 'Cathrine /Riddle/', 'Anna /Riddle/', 'Peter /Riddle/', 'Jack /Riddle/', 'Jaimie /Riddle/', 'Jenny /Riddle/', 'Tommy /Riddle/', 'Ryan /Riddle/']
 
 US35 ==>List of recent births : 
- ['Frank /George/']
+ []
 
 US36 ==>List of recent deaths : 
- ['Frank /George/']
+ []
 
 US38 ==>List of upcoming Birthdays : 
- ['Stephen /Sebast/', 'Fred /Billiams/', 'Clone /001/']
+ ['Stephen /Sebast/']

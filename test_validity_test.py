@@ -1,4 +1,4 @@
-
+from typing import Dict
 from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage, unique_name_and_birth_date
@@ -8,6 +8,7 @@ from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
+from validity_test import get_age
 
 
 class Test(TestCase):
@@ -27,6 +28,33 @@ class Test(TestCase):
         self.assertNotEqual(younger_than_150("12 DEC 1980", "12 DEC 2130", "Fred Smith"), "")
         self.assertNotEqual(younger_than_150("12 DEC 1980", "13 DEC 2130", "Fred Smith"), "")
         self.assertNotEqual(younger_than_150("12 NOV 1980", "01 DEC 2130", "Fred Smith"), "")
+
+    # User Story 27: This test verifies that we can accurately determine someone's age, which
+    # allows us to include it in the output
+    def test_get_age(self):
+        ind = Individual("I001")
+        ind.birth_d = None
+        ind.death_d = None
+
+        # We know nothing
+        self.assertEqual(get_age(ind), "Unknown")
+
+        # Known death date, but not birth date
+        ind.death_d = "01 jan 1980"
+        self.assertEqual(get_age(ind), "Unknown")
+
+        # Garbage death date
+        ind.death_d = "Sixscore and fifteen years ago"
+        self.assertEqual(get_age(ind), "Unknown")
+
+        # Garbage birth date
+        ind.birth_d = "Eightscore and fifteen years ago"
+        self.assertEqual(get_age(ind), "Unknown")
+
+        # Ten years old
+        ind.birth_d = "01 jan 1980"
+        ind.death_d = "01 jan 1990"
+        self.assertEqual(get_age(ind), 10)
 
     # User Story 06: Divorce must happen before a person's death
     def test_divorce_before_death(self):
@@ -210,7 +238,7 @@ class Test(TestCase):
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_recent_deaths(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_deaths(["5 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_deaths(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_recent_deaths(["16 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_deaths(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
@@ -226,8 +254,8 @@ class Test(TestCase):
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_recent_births(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_births(["5 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertTrue(list_of_recent_births(["6 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_births(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["10 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
     ####US38#####
@@ -242,7 +270,7 @@ class Test(TestCase):
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_upcoming_birthdays(["18 APR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_upcoming_birthdays(["5 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_upcoming_birthdays(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_upcoming_birthdays(["16 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_upcoming_birthdays(["5 JAN 1985"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_upcoming_birthdays(["5 DEC 1985"], (ind1, ind2, ind3, ind4)), "")
