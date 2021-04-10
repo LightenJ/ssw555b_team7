@@ -22,6 +22,7 @@ from data_classes import Family
 from data_classes import Ancestors
 from dateutil import relativedelta
 from typing import List, Dict, Any
+from collections import Counter
 
 
 def check_valid(individuals: List[Individual], families: List[Family]):
@@ -606,6 +607,48 @@ def us15_fewer_than_15_siblings(family):
     my_error = ""
     if len(family.children) >= 15:
         my_error = "Error: US15: Family: " + family.fam_id + " has 15 or more siblings"
+
+    return my_error
+
+# User story 16, Male last names
+def us16_male_last_names(individuals, families):
+    my_error = ""
+    for family in families:
+        if family.marriage_d:
+            lastname = family.hus_id
+
+            for ind in individuals:
+                if lastname == ind.ind_id:
+                    l_name = ind.name.split('/')[-2].lower()
+
+                for ind in individuals:
+                    id = ind.ind_id
+                    name = ind.name
+                    gender = ind.sex
+
+                    if id in family.children:
+                        if gender == "M":
+                            if l_name not in name:
+                                my_error = "Error: US16: " + name + "'s lastname is not same as father's."
+
+    return my_error
+
+
+# User story 14, Multiple births <= 5
+def us14_multiple_births_less_than_5(individuals, families):
+    my_error = ""
+
+    for family in families:
+        sibling_uids = family.children
+        siblings = list(x for x in individuals if x.ind_id in sibling_uids)
+        sib_birthdays = []
+        for sibling in siblings:
+            sib_birthdays.append(sibling.birth_d)
+        result = Counter(sib_birthdays).most_common(1)
+        for (a, b) in result:
+            if b > 5:
+                family.fam_id
+                my_error = "Error: US14: Family " + family.fam_id + " has more than 5 siblings born at once."
 
     return my_error
 
