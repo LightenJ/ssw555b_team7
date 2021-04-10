@@ -220,6 +220,8 @@ try:
     print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))
     print("\nUS36 ==>List of recent deaths : \n", validity_test.list_of_recent_deaths(read_death_dates,individuals))
     print("\nUS38 ==>List of upcoming Birthdays : \n", validity_test.list_of_upcoming_birthdays(read_birth_dates,individuals))
+    print("\nUS14 ==> Multiple births less than or equal to 5 : \n",validity_test.us14_multiple_births_less_than_5(individuals, families))
+    print("\nUS16 ==> Male last names : \n", validity_test.us16_male_last_names(individuals, families))
 except Exception as exception:
     print(exception)
 
