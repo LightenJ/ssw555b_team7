@@ -2,7 +2,7 @@ from typing import Dict
 from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age
-from validity_test import birthbeforedeath, unique_families_by_spouses
+from validity_test import birthbeforedeath, unique_families_by_spouses, s16_male_last_names, us14_multiple_births_less_than_5
 from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births
@@ -513,4 +513,48 @@ class Test(TestCase):
         family = Family("FAM002")
         family.children = ["CHIL1", "CHIL2", "CHIL3", "CHIL4", "CHIL5"]
         self.assertFalse(us15_fewer_than_15_siblings(family), "")
+        
+    # User story 16: us16_male_last_names
+    def test_us16_male_last_names(self):
+        ind = []
+        fam = []
+        fam1 = Family('F01')
+        fam1.hus_id = 'I01'
+        fam1.children = ["chil1", "chil2"]
+        fam2 = Family('F02')
+        fam2.hus_id = 'I03'
+        fam1.children = ["chil1", "chil2"]
+        ind1 = Individual("I01")
+        ind1.id = 'I01'
+        ind1.name = 'HUS1 lname'
+        ind2 = Individual("I02")
+        ind2.name = 'rob kname'
+        ind2.sex = 'M'
+
+        # self.assertEqual(us16_male_last_names((ind1, ind2, ind3, ind4), (fam1, fam2)), [])
+        self.assertEqual(us16_male_last_names((ind1, ind2), (fam1, fam2)), "")
+
+    # User story 14, Multiple births <= 5
+    def test_us14_multiple_births_less_than_5(self):
+        fam1 = Family("FAM001")
+        fam1.children = ["I01", "I02", "I03", "I04", "I05", "I06"]
+        fam2 = Family("FAM001")
+        fam2.children = ["I01", "I02", "I03", "I04", "I05", "I06"]
+        ind1 = Individual("I01")
+        ind1.birth_d = '27 OCT 1999'
+        ind2 = Individual("I02")
+        ind2.birth_d = '27 OCT 1999'
+        ind3 = Individual("I03")
+        ind3.birth_d = '27 OCT 1999'
+        ind4 = Individual("I04")
+        ind4.birth_d = '27 OCT 1999'
+        ind5 = Individual("I05")
+        ind5.birth_d = '27 OCT 1999'
+        ind6 = Individual("I06")
+        ind6.birth_d = '27 OCT 1999'
+        self.assertNotEqual(us14_multiple_births_less_than_5((ind1, ind2, ind3, ind4, ind5, ind6), (fam1, fam2)), "")
+
+
+
+
 
