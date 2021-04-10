@@ -554,6 +554,7 @@ class Test(TestCase):
         ind6 = Individual("I06")
         ind6.birth_d = '27 OCT 1999'
         self.assertNotEqual(us14_multiple_births_less_than_5((ind1, ind2, ind3, ind4, ind5, ind6), (fam1, fam2)), "")
+        self.assertEqual(us14_multiple_births_less_than_5((ind1, ind2, ind3, ind4, ind5), (fam1, fam2)), "")
 
 
 
