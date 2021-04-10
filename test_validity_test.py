@@ -533,6 +533,7 @@ class Test(TestCase):
 
         # self.assertEqual(us16_male_last_names((ind1, ind2, ind3, ind4), (fam1, fam2)), [])
         self.assertEqual(us16_male_last_names((ind1, ind2), (fam1, fam2)), "")
+        self.assertEqual(us16_male_last_names((ind1), (fam1, fam2)), "")
 
     # User story 14, Multiple births <= 5
     def test_us14_multiple_births_less_than_5(self):
