@@ -629,7 +629,7 @@ def us16_male_last_names(individuals, families):
                     if id in family.children:
                         if gender == "M":
                             if l_name not in name:
-                                my_error = "Error: US16: " + name + "'s lastname is not same as father's."
+                                my_error = "Error: US16: " + name + "'s lastname is not same as his/her/their father's."
 
     return my_error
 
