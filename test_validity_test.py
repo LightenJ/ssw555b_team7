@@ -8,7 +8,7 @@ from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
-from validity_test import get_age
+from validity_test import get_age, married_to_aunt_or_uncle
 
 
 class Test(TestCase):
@@ -329,7 +329,7 @@ class Test(TestCase):
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_recent_births(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertTrue(list_of_recent_births(["10 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["12 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
     ####US38#####
@@ -436,9 +436,42 @@ class Test(TestCase):
         # Shared grandparent but same parents
         ancestor_dict[family.wife_id].parents = {"MOM2", "DAD1"}
         self.assertEqual(married_first_cousins(family, ancestor_dict), "")
-        
-        
-     # User Story 18: us18_siblings_shud_not_marry
+
+        # User Story 20: Aunts/uncles married to nephews/nieces
+    def test_married_to_aunt_or_uncle(self):
+        ancestor_dict: Dict[str, Ancestors] = {}
+        family = Family("FAM001")
+
+        family.fam_id = "FAM01"
+        family.wife_id = "WIFE01"
+        family.hus_id = "HUS01"
+
+        # No ancestors exist
+        self.assertEqual(married_to_aunt_or_uncle(family, ancestor_dict), "")
+
+        # Only parents known
+        ancestor_dict[family.wife_id] = Ancestors()
+        ancestor_dict[family.wife_id].parents = {"MOM1", "DAD1"}
+        ancestor_dict[family.hus_id] = Ancestors()
+        ancestor_dict[family.hus_id].parents = {"MOM2", "DAD2"}
+        self.assertEqual(married_to_aunt_or_uncle(family, ancestor_dict), "")
+
+        # Parents' siblings are unrelated to the married parties
+        ancestor_dict[family.wife_id].aunts_and_uncles = {"AUNT1", "AUNT2", "UNCLE1", "UNCLE2"}
+        ancestor_dict[family.hus_id].aunts_and_uncles = {"AUNT3", "AUNT4", "UNCLE3", "UNCLE4"}
+        self.assertEqual(married_to_aunt_or_uncle(family, ancestor_dict), "")
+
+        # Wife's uncle is the husband
+        ancestor_dict[family.wife_id].aunts_and_uncles = {"AUNT01", "AUNT02", "HUS01"}
+        self.assertNotEqual(married_to_aunt_or_uncle(family, ancestor_dict), "")
+
+        # Husband's aunt is the wife
+        ancestor_dict[family.wife_id].aunts_and_uncles = {}
+        ancestor_dict[family.hus_id].aunts_and_uncles = {"UNCLE01", "UNCLE02", "WIFE01"}
+        self.assertNotEqual(married_to_aunt_or_uncle(family, ancestor_dict), "")
+
+
+    # User Story 18: us18_siblings_shud_not_marry
     def test_us18_siblings_shud_not_marry(self):
         ancestor_dict: Dict[str, Ancestors] = {}
         family = Family("FAM001")

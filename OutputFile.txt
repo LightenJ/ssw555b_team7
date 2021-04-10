@@ -35,6 +35,8 @@ Individual ID and Name
 | I214 |   Jaimie /Riddle/    | 12 DEC 2010 |     None    |    None   |   F105   |  10 |
 | I215 |    Jenny /Riddle/    | 12 DEC 2012 |     None    |    None   |   F105   |  8  |
 | I216 |    Tommy /Riddle/    | 12 DEC 2015 |     None    |    None   |   F105   |  5  |
+| I250 |    Billy /Riddle/    | 15 DEC 2020 |     None    |    None   |   None   |  0  |
+| I251 |    Sally /Riddle/    | 12 DEC 2020 |     None    |    None   |   None   |  0  |
 |  I3  |   Stephen /Sebast/   | 10 APR 2011 |     None    |    None   |    F1    |  9  |
 |  I4  |  Zachariah /Sebast/  | 16 DEC 2006 |     None    |    F102   |    F1    |  14 |
 | I49  |   Bill /Williams/    |  8 JUN 1980 |     None    |    F101   |   None   |  40 |
@@ -56,6 +58,10 @@ Individual ID and Name
 | F103 |  Bill /Williams/   |  Regena /Williams/   |                                       I50                                       |
 | F104 | Jonathan /Sebast/  |    Sarah /Sebast/    |                                                                                 |
 | F105 |    Tom /Riddle/    |   Martha /Riddle/    | I202,I203,I204,I205,I206,I207,I208,I209,I210,I211,I212,I213,I214,I215,I216,I217 |
+| F106 |  Stephen /Sebast/  |    Julia /Riddle/    |                                       I250                                      |
+| F107 |   Ryan /Riddle/    |    Present /Girl/    |                                       I251                                      |
+| F108 |   Billy /Riddle/   |    Jenny /Riddle/    |                                                                                 |
+| F109 |    Ron /Riddle/    |    Sally /Riddle/    |                                                                                 |
 |  F2  |   Mark /Sebast/    | Constance /McKenzie/ |                                    I1,I15,I16                                   |
 | F2B  |   Mark /Sebast/    | Constance /McKenzie/ |                                    I1,I15,I16                                   |
 |  F3  | Timothy /Williams/ |    Donna /Doubet/    |                                    I2,I9,I10                                    |
@@ -64,6 +70,8 @@ Individual ID and Name
 +------+--------------------+----------------------+---------------------------------------------------------------------------------+
 
 US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is : False
+Error: US#10: Stephen /Sebast/ was married when younger than 14.
+
 Error: US#04: Family: Married before divorce date.
 
 Error: US#21: Donna /Doubet/ is a woman listed as a husband in family F4.
@@ -92,11 +100,23 @@ Warning: US#21: LateBirth /Girl/ is a spouse in family F100, but that person's g
 
 Error: US#10: Martha /Riddle/ was married when younger than 14.
 
+Error: US#10: Jenny /Riddle/ was married when younger than 14.
+
+Error: US#10: Ryan /Riddle/ was married when younger than 14.
+
+Error: US#10: Billy /Riddle/ was married when younger than 14.
+
+Error: US#10: Sally /Riddle/ was married when younger than 14.
+
 Error: US#08: Eric /Sebast/ was born before his/her parents were married.
 
 Error: US#08: Eric /Sebast/ was born before his/her parents were married.
 
 Error: US#19: Husband I4 and wife I50 in family F102 are first cousins who share the following grandparent(s): I6 I7.
+
+Error: US#20: family F108's husband, I250, is married to his aunt, I215.
+
+Error: US#20: family F109's wife, I251, is married to her uncle, I203.
 
 Error: US#18: Husband I1 and wife I15 in family F104 are married siblings who share the same parent(s): I13 I13 I14 I14 I13 I13 I14 I14.
 
@@ -110,13 +130,13 @@ US24 ==> Duplicate families by spouses: [('1 JAN 1978', 'Constance /McKenzie/')]
 
 US25 ==> Duplicate Child by family : []
 
-US28 ==> Order siblings by age : [[('3 JUN 2005', 'Susan /Williams/'), 'F103'], [('12 DEC 1990', 'Jimmy /Riddle/'), ('12 DEC 1992', 'Ron /Riddle/'), ('12 DEC 1993', 'Hagrid /Riddle/'), ('12 DEC 1995', 'Robert /Riddle/'), ('12 Nov 1997', 'Brad /Riddle/'), ('10 DEC 1999', 'Julia /Riddle/'), ('12 DEC 1999', 'Mike /Riddle/'), ('12 DEC 2001', 'James /Riddle/'), ('12 DEC 2003', 'Cathrine /Riddle/'), ('12 DEC 2006', 'Anna /Riddle/'), ('12 DEC 2007', 'Peter /Riddle/'), ('12 DEC 2008', 'Jack /Riddle/'), ('12 DEC 2010', 'Jaimie /Riddle/'), ('12 DEC 2012', 'Jenny /Riddle/'), ('12 DEC 2015', 'Tommy /Riddle/'), ('12 DEC 2018', 'Ryan /Riddle/'), 'F105'], [('16 DEC 2006', 'Zachariah /Sebast/'), ('12 OCT 2008', 'Abigail /Sebast/'), ('10 APR 2011', 'Stephen /Sebast/'), 'F1'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2B'], [('1 JAN 1978', 'Nancy /Williams/'), ('3 JUN 1980', 'Regena /Williams/'), ('10 JUN 1982', 'Gerri /Williams/'), 'F3'], [('1 APR 1991', 'Fred /Billiams/'), 'F5']]
+US28 ==> Order siblings by age : [[('3 JUN 2005', 'Susan /Williams/'), 'F103'], [('12 DEC 1990', 'Jimmy /Riddle/'), ('12 DEC 1992', 'Ron /Riddle/'), ('12 DEC 1993', 'Hagrid /Riddle/'), ('12 DEC 1995', 'Robert /Riddle/'), ('12 Nov 1997', 'Brad /Riddle/'), ('10 DEC 1999', 'Julia /Riddle/'), ('12 DEC 1999', 'Mike /Riddle/'), ('12 DEC 2001', 'James /Riddle/'), ('12 DEC 2003', 'Cathrine /Riddle/'), ('12 DEC 2006', 'Anna /Riddle/'), ('12 DEC 2007', 'Peter /Riddle/'), ('12 DEC 2008', 'Jack /Riddle/'), ('12 DEC 2010', 'Jaimie /Riddle/'), ('12 DEC 2012', 'Jenny /Riddle/'), ('12 DEC 2015', 'Tommy /Riddle/'), ('12 DEC 2018', 'Ryan /Riddle/'), 'F105'], [('15 DEC 2020', 'Billy /Riddle/'), 'F106'], [('12 DEC 2020', 'Sally /Riddle/'), 'F107'], [('16 DEC 2006', 'Zachariah /Sebast/'), ('12 OCT 2008', 'Abigail /Sebast/'), ('10 APR 2011', 'Stephen /Sebast/'), 'F1'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2B'], [('1 JAN 1978', 'Nancy /Williams/'), ('3 JUN 1980', 'Regena /Williams/'), ('10 JUN 1982', 'Gerri /Williams/'), 'F3'], [('1 APR 1991', 'Fred /Billiams/'), 'F5']]
 
 US30 ==> List of living married is : 
  ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/', 'Tom /Riddle/', 'Martha /Riddle/']
 
 US31 ==> List of living single is : 
- ['Stephen /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/', 'Jimmy /Riddle/', 'Ron /Riddle/', 'Hagrid /Riddle/', 'Robert /Riddle/', 'Brad /Riddle/', 'Julia /Riddle/', 'Mike /Riddle/', 'James /Riddle/', 'Cathrine /Riddle/', 'Anna /Riddle/', 'Peter /Riddle/', 'Jack /Riddle/', 'Jaimie /Riddle/', 'Jenny /Riddle/', 'Tommy /Riddle/', 'Ryan /Riddle/']
+ ['Stephen /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/', 'Jimmy /Riddle/', 'Ron /Riddle/', 'Hagrid /Riddle/', 'Robert /Riddle/', 'Brad /Riddle/', 'Julia /Riddle/', 'Mike /Riddle/', 'James /Riddle/', 'Cathrine /Riddle/', 'Anna /Riddle/', 'Peter /Riddle/', 'Jack /Riddle/', 'Jaimie /Riddle/', 'Jenny /Riddle/', 'Tommy /Riddle/', 'Ryan /Riddle/', 'Billy /Riddle/', 'Sally /Riddle/']
 
 US35 ==>List of recent births : 
  []

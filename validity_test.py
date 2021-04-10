@@ -72,12 +72,19 @@ def check_valid(individuals: List[Individual], families: List[Family]):
             ancestor_dict[child].parents.append(family.hus_id)
             ancestor_dict[child].parents.append(family.wife_id)
 
-    # Use the dictionary to find all grandparents of each individual in a family
+            # Track siblings
+            for other_child in family.children:
+                if child != other_child:
+                    ancestor_dict[child].siblings.append(other_child)
+
+    # Use the dictionary to find all grandparents, aunts, and uncles of each individual in a family
     for person in ancestor_dict:
         for parent in ancestor_dict[person].parents:
             if parent in ancestor_dict:
                 for grandparent in ancestor_dict[parent].parents:
                     ancestor_dict[person].grandparents.append(grandparent)
+                for sibling in ancestor_dict[parent].siblings:
+                    ancestor_dict[person].aunts_and_uncles.append(sibling)
 
     # Check for married first cousins
     for family in families:
@@ -85,7 +92,14 @@ def check_valid(individuals: List[Individual], families: List[Family]):
         # Append any errors we found to the top level error_statuses
         if len(temp_error_status) > 0:
             error_statuses.append(temp_error_status)
-            
+
+    # Check for married nieces/nephews married to aunts/uncles
+    for family in families:
+        temp_error_status = married_to_aunt_or_uncle(family, ancestor_dict)
+        # Append any errors we found to the top level error_statuses
+        if len(temp_error_status) > 0:
+            error_statuses.append(temp_error_status)
+
     # check for married siblings
     for family in families:
         temp_error_status = us18_siblings_shud_not_marry(family, ancestor_dict)
@@ -536,6 +550,26 @@ def married_first_cousins(family : Family, ancestors : Ancestors):
         my_error = my_error + ".\n"
 
     return my_error
+
+
+# User story 20, aunts and uncles should not marry nieces and nephews
+def married_to_aunt_or_uncle(family: Family, ancestors: Ancestors):
+    my_error = ""
+
+    if family.wife_id in ancestors:
+        for aunt_or_uncle in ancestors[family.wife_id].aunts_and_uncles:
+            if aunt_or_uncle == family.hus_id:
+                my_error = "Error: US#20: family " + family.fam_id + "'s wife, " + family.wife_id + \
+                           ", is married to her uncle, " + aunt_or_uncle + ".\n"
+
+    if family.hus_id in ancestors:
+        for aunt_or_uncle in ancestors[family.hus_id].aunts_and_uncles:
+            if aunt_or_uncle == family.wife_id:
+                my_error = "Error: US#20: family " + family.fam_id + "'s husband, " + family.hus_id + \
+                           ", is married to his aunt, " + aunt_or_uncle + ".\n"
+
+    return my_error
+
 
 # User story 18, siblings should not marry
 def us18_siblings_shud_not_marry(family : Family, ancestors : Ancestors):

@@ -38,3 +38,5 @@ class Ancestors:
     def __init__(self):
         self.parents = []
         self.grandparents = []
+        self.aunts_and_uncles = []
+        self.siblings = []
