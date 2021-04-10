@@ -291,12 +291,15 @@ class Test(TestCase):
         self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1, fam2)), [[('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), ('27 OCT 1983', 'Child1'), ('26 OCT 1985', 'Child2'), 'F01'],[('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), 'F02']])#
         ind2.name = 'Child1'
         ind2.birth_d = '27 OCT 1983'
+        #duplicate name and birthday
         self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [[('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), ('27 OCT 1983', 'Child1'), ('27 OCT 1983', 'Child1'), 'F01'], [('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), 'F02']])#
-        ind2.birth_d = '27 OCT 1983'
-
-        self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1, fam3)), [[('25 OCT 1982', 'Child3'),('26 OCT 1983', 'Child4'),('27 OCT 1983', 'Child1'),('27 OCT 1983', 'Child1'),'F01']])#
+        ind2.name = 'Child2'
+        ind2.birth_d = '27 NOV 1983'
+        #same day and year but different month
+        self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1, fam3)), [[('25 OCT 1982', 'Child3'),('26 OCT 1983', 'Child4'),('27 OCT 1983', 'Child1'),('27 NOV 1983', 'Child2'),'F01']])#
         ind2.birth_d = '25 OCT 1983'
         fam1.children = []
+        #family with no Children
         self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1,fam3 )), [])#
 
 
