@@ -395,6 +395,40 @@ def unique_families_by_spouses(individuals, families):
 
     duplicate= get_duplicate(spouse_name_marr_d)
     return duplicate
+
+def get_child_name_and_birth_d(f, individuals):
+    child_name_birth_d = []
+    for child in f.children:
+        for i in individuals:
+            if child == i.ind_id:
+                child_name = i.name
+                child_birth_d = i.birth_d
+                child_name_birth_d.append((child_birth_d, child_name))
+
+    return child_name_birth_d
+
+####US25##### Unique first names in families
+#No more than one child with the same name and birth date should appear in a family
+def unique_families_by_child(individuals, families):
+    duplicate = []
+    for f in families:
+        f_duplicate = get_duplicate(get_child_name_and_birth_d (f, individuals))
+        if f_duplicate:
+            f_duplicate.append(f.fam_id)
+            duplicate.append(f_duplicate)
+    return duplicate
+
+####US28##### Order siblings by age
+#List siblings in families by decreasing age, i.e. oldest siblings first
+def order_siblings_by_age(individuals, families):
+    child_order_for_family = []
+    for f in families:
+        f_sorted = sorted(get_child_name_and_birth_d (f, individuals), key=lambda x: convert_date(x[0]))
+        if f_sorted:
+            f_sorted.append(f.fam_id)
+            child_order_for_family.append(f_sorted)
+    return child_order_for_family
+
 ####US30####
 
 def list_of_living_married(individuals):

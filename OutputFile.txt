@@ -108,6 +108,10 @@ US23 ==> Duplicate name and birth date: [('Buffalo /Billiams/', '2 JAN 1952')]
 
 US24 ==> Duplicate families by spouses: [('1 JAN 1978', 'Constance /McKenzie/')]
 
+US25 ==> Duplicate Child by family : []
+
+US28 ==> Order siblings by age : [[('3 JUN 2005', 'Susan /Williams/'), 'F103'], [('12 DEC 1990', 'Jimmy /Riddle/'), ('12 DEC 1992', 'Ron /Riddle/'), ('12 DEC 1993', 'Hagrid /Riddle/'), ('12 DEC 1995', 'Robert /Riddle/'), ('12 Nov 1997', 'Brad /Riddle/'), ('10 DEC 1999', 'Julia /Riddle/'), ('12 DEC 1999', 'Mike /Riddle/'), ('12 DEC 2001', 'James /Riddle/'), ('12 DEC 2003', 'Cathrine /Riddle/'), ('12 DEC 2006', 'Anna /Riddle/'), ('12 DEC 2007', 'Peter /Riddle/'), ('12 DEC 2008', 'Jack /Riddle/'), ('12 DEC 2010', 'Jaimie /Riddle/'), ('12 DEC 2012', 'Jenny /Riddle/'), ('12 DEC 2015', 'Tommy /Riddle/'), ('12 DEC 2018', 'Ryan /Riddle/'), 'F105'], [('16 DEC 2006', 'Zachariah /Sebast/'), ('12 OCT 2008', 'Abigail /Sebast/'), ('10 APR 2011', 'Stephen /Sebast/'), 'F1'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2B'], [('1 JAN 1978', 'Nancy /Williams/'), ('3 JUN 1980', 'Regena /Williams/'), ('10 JUN 1982', 'Gerri /Williams/'), 'F3'], [('1 APR 1991', 'Fred /Billiams/'), 'F5']]
+
 US30 ==> List of living married is : 
  ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/', 'Tom /Riddle/', 'Martha /Riddle/']
 

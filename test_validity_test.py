@@ -1,7 +1,7 @@
 from typing import Dict
 from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
-from validity_test import birthbeforemarriage, unique_name_and_birth_date
+from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age
 from validity_test import birthbeforedeath, unique_families_by_spouses
 from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry
@@ -199,8 +199,7 @@ class Test(TestCase):
 
     ####US24##### Unique families by spouses
     def test_unique_families_by_spouses(self):
-        ind = []
-        fam = []
+
         ind1 = Individual("I01")
         ind1.name = 'HUS1'
         ind2 = Individual("I02")
@@ -225,6 +224,81 @@ class Test(TestCase):
         self.assertEqual(unique_families_by_spouses((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [('22 FEB 2013', 'WIFE1')])#
         fam3.marriage_d = '23 FEB 2013'
         self.assertEqual(unique_families_by_spouses((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [])#
+
+    ####US25##### Unique families by spouse
+    def test_unique_families_by_child(self):
+        ind1 = Individual("I01")
+        ind1.name = 'Child1'
+        ind1.birth_d = '27 OCT 1983'
+        ind2 = Individual("I02")
+        ind2.name = 'Child2'
+        ind2.birth_d = '26 OCT 1985'
+
+        ind3 = Individual("I03")
+        ind3.name = 'Child3'
+        ind3.birth_d = '25 OCT 1982'
+
+        ind4 = Individual("I04")
+        ind4.name = 'Child4'
+        ind4.birth_d = '26 OCT 1983'
+
+        fam1 = Family('F01')
+        fam1.children = ['I01', 'I02', 'I03', 'I04']
+        fam2 = Family('F02')
+        fam2.children = ['I03', 'I04']
+        fam3 = Family('F03')
+        fam3.children = 'I01'
+
+        self.assertEqual(unique_families_by_child((ind1, ind2, ind3, ind4), (fam1, fam2)), [])  #
+        ind2.name = 'Child1'
+        ind2.birth_d = '27 OCT 1983'
+        self.assertEqual(unique_families_by_child((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)),
+                         [[('27 OCT 1983', 'Child1'), 'F01']])  #
+        ind2.birth_d = '27 OCT 2000'
+        ind2.name = 'Child5'
+
+        self.assertEqual(unique_families_by_child((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [])  #
+        ind2.name = 'Child1'
+        ind2.birth_d = '25 OCT 1983'
+
+        self.assertEqual(unique_families_by_child((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [])  #
+
+    ####US28##### Order siblings by age
+    def test_order_siblings_by_age(self):
+
+        ind1 = Individual("I01")
+        ind1.name = 'Child1'
+        ind1.birth_d = '27 OCT 1983'
+        ind2 = Individual("I02")
+        ind2.name = 'Child2'
+        ind2.birth_d = '26 OCT 1985'
+
+        ind3 = Individual("I03")
+        ind3.name = 'Child3'
+        ind3.birth_d = '25 OCT 1982'
+
+        ind4 = Individual("I04")
+        ind4.name = 'Child4'
+        ind4.birth_d = '26 OCT 1983'
+
+        fam1 = Family('F01')
+        fam1.children = ['I01', 'I02', 'I03', 'I04']
+        fam2 = Family('F02')
+        fam2.children = ['I03', 'I04']
+        fam3 = Family('F03')
+        fam3.children = 'I01'
+
+        self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1, fam2)), [[('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), ('27 OCT 1983', 'Child1'), ('26 OCT 1985', 'Child2'), 'F01'],[('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), 'F02']])#
+        ind2.name = 'Child1'
+        ind2.birth_d = '27 OCT 1983'
+        self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1, fam2, fam3)), [[('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), ('27 OCT 1983', 'Child1'), ('27 OCT 1983', 'Child1'), 'F01'], [('25 OCT 1982', 'Child3'), ('26 OCT 1983', 'Child4'), 'F02']])#
+        ind2.birth_d = '27 OCT 1983'
+
+        self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1, fam3)), [[('25 OCT 1982', 'Child3'),('26 OCT 1983', 'Child4'),('27 OCT 1983', 'Child1'),('27 OCT 1983', 'Child1'),'F01']])#
+        ind2.birth_d = '25 OCT 1983'
+        fam1.children = []
+        self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1,fam3 )), [])#
+
 
     ####US35#####
     # This test verifies that these individuals are dead within last 30 days or not
