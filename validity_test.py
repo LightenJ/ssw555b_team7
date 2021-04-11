@@ -486,6 +486,39 @@ def list_of_recent_deaths(death_dates,individuals):
                 lstrecent_deaths.append(ind.name)
     return lstrecent_deaths
 
+####US37 List recent survivors
+
+def list_of_survivors(individuals, families):
+    individualsId = [individual.ind_id for individual in individuals]
+    individualsDeathday = [individual.death_d for individual in individuals]
+    recentDeathId = []
+    recentsurvivors = []
+    wife_name = ""
+    husband_name = ""
+    x = 0
+    while (x < len(individualsId)):
+        if (individualsDeathday[x] != None):
+            _date = convert_date(individualsDeathday[x])
+            death = abs((_date - datetime.today()).days)
+            if death < 30:
+                recentDeathId.append(individualsId[x])
+        x += 1
+    for death,fam in zip(recentDeathId,families):
+        #print("Deceased:", death)
+        if death != None:
+            if fam.hus_id == death:
+                for i in individuals:
+                    if fam.wife_id == i.ind_id:
+                        wife_name = i.name
+                recentsurvivors.append(wife_name)
+            else:
+                for i in individuals:
+                    if fam.hus_id == i.ind_id:
+                        husband_name = i.name
+                recentsurvivors.append(husband_name)
+        if fam.children != "None":
+            recentsurvivors.append(fam.children)
+    return recentsurvivors
 ####US38 List all living people in a GEDCOM file whose birthdays occur in the next 30 days####
 
 def list_of_upcoming_birthdays(birth_dates,individuals):
@@ -508,6 +541,17 @@ def list_of_upcoming_birthdays(birth_dates,individuals):
                         lstupcoming_birthdays.append(ind.name)
     return lstupcoming_birthdays
 
+####US39 List upcoming anniversaries####
+
+def list_of_anniversaries(marriage_dates,individuals):
+    lstrecent_marriage = []
+    for (marr,ind) in zip(marriage_dates,individuals):
+        if marr is not None:
+            _date = convert_date(marr)
+            marriage = abs((_date - datetime.today()).days)
+            if marriage < 30:
+                lstrecent_marriage.append(ind.name)
+    return lstrecent_marriage
 
 # User story 19, first cousins should not marry
 def married_first_cousins(family : Family, ancestors : Ancestors):

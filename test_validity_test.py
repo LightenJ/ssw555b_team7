@@ -4,8 +4,8 @@ from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age
 from validity_test import birthbeforedeath, unique_families_by_spouses, us16_male_last_names, us14_multiple_births_less_than_5
 from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings
-from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry
-from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births
+from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry,list_of_anniversaries
+from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births,list_of_survivors
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
 from validity_test import get_age, married_to_aunt_or_uncle
@@ -314,10 +314,10 @@ class Test(TestCase):
         ind3.name = 'HUS2'
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
-        self.assertTrue(list_of_recent_deaths(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_deaths(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertTrue(list_of_recent_deaths(["16 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_deaths(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_births(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["16 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_births(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
     ####US36#####
     # This test verifies that these individuals are dead within last 30 days or not
@@ -330,10 +330,33 @@ class Test(TestCase):
         ind3.name = 'HUS2'
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
-        self.assertTrue(list_of_recent_births(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_births(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertTrue(list_of_recent_births(["12 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_births(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_deaths(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_deaths(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_deaths(["12 APR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_deaths(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
+
+        ####US37#####
+        # This test verifies that these individuals are survived within last 30 days or not
+
+    def test_list_of_survivors(self):
+        ind1 = Individual("I109")
+        ind1.name = 'HUS1'
+        ind2 = Individual("I100")
+        ind2.name = 'WIFE1'
+        ind3 = Individual("I209")
+        ind3.name = 'HUS2'
+        ind4 = Individual("I4")
+        ind4.name = 'WIFE2'
+        fam1 = Family('F100')
+        fam1.children = ['I01', 'I02', 'I03', 'I04']
+        fam2 = Family('F102')
+        fam2.children = ['I03', 'I04']
+        fam3 = Family('F100')
+        fam3.children = 'I01'
+        self.assertFalse(list_of_survivors((ind1, ind2),(fam1, fam2)))
+        self.assertFalse(list_of_survivors((ind1, ind2, ind3, ind4),(fam1, fam2)))
+        self.assertFalse(list_of_survivors((ind1, ind2, ind3, ind4,),(fam1,fam2, fam3)))
+        self.assertFalse(list_of_survivors((ind1, ind2, ind3, ind4),(fam1,fam2, fam3)))
 
     ####US38#####
     # This test verifies that these individuals birthday is in next 30 days or not
@@ -351,6 +374,23 @@ class Test(TestCase):
         self.assertTrue(list_of_upcoming_birthdays(["16 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_upcoming_birthdays(["5 JAN 1985"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_upcoming_birthdays(["5 DEC 1985"], (ind1, ind2, ind3, ind4)), "")
+        ####US38#####
+        # This test verifies that these individuals birthday is in next 30 days or not
+
+    def test_list_of_anniversaries(self):
+        ind1 = Individual("I01")
+        ind1.name = 'HUS1'
+        ind2 = Individual("I02")
+        ind2.name = 'WIFE1'
+        ind3 = Individual("I03")
+        ind3.name = 'HUS2'
+        ind4 = Individual("I04")
+        ind4.name = 'WIFE2'
+        self.assertTrue(list_of_anniversaries(["18 APR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_anniversaries(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_anniversaries(["16 APR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_anniversaries(["5 JAN 1985"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_anniversaries(["5 DEC 1985"], (ind1, ind2, ind3, ind4)), "")
 
     # User Story 21: Correct gender for role
     def test_correct_gender_for_role(self):

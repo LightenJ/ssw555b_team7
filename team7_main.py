@@ -58,7 +58,7 @@ read_dates = []
 ids_list =[]
 read_birth_dates = []
 read_death_dates = []
-
+read_marriage_dates = []
 
 def data_match(splitline):
     data_found = False
@@ -172,6 +172,7 @@ def find_str(read_lines):
         ids_list.append(f.fam_id)
         read_dates.append(f.marriage_d)
         read_dates.append(f.divorce_d)
+        read_marriage_dates.append(f.marriage_d)
         lstchildren = []
         hus_name = '' #default
         wif_name = '' #default
@@ -219,7 +220,9 @@ try:
     print("\nUS31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
     print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))
     print("\nUS36 ==>List of recent deaths : \n", validity_test.list_of_recent_deaths(read_death_dates,individuals))
+    print("\nUS37 ==>List of recent survivors : \n", validity_test.list_of_survivors(individuals, families))
     print("\nUS38 ==>List of upcoming Birthdays : \n", validity_test.list_of_upcoming_birthdays(read_birth_dates,individuals))
+    print("\nUS38 ==>List of upcoming anniversaries : \n",validity_test.list_of_anniversaries(read_marriage_dates, individuals))
     print("\nUS14 ==> Multiple births less than or equal to 5 : \n",validity_test.us14_multiple_births_less_than_5(individuals, families))
     print("\nUS16 ==> Male last names : \n", validity_test.us16_male_last_names(individuals, families))
 except Exception as exception:
