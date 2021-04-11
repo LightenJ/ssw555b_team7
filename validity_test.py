@@ -523,24 +523,28 @@ def list_of_survivors(individuals, families):
             if death < 30:
                 recentDeathId.append(individualsId[x])
         x += 1
-    for death,fam in zip(recentDeathId,families):
+    for death in recentDeathId:
         #print("Deceased:", death)
         if death != None:
-            if fam.hus_id == death:
-                for i in individuals:
-                    if fam.wife_id == i.ind_id:
-                        wife_name = i.name
-                recentsurvivors.append(wife_name)
-            else:
-                for i in individuals:
-                    if fam.hus_id == i.ind_id:
-                        husband_name = i.name
-                recentsurvivors.append(husband_name)
-            if fam.children != "None":
-                for i,c in zip(individuals,fam.children):
-                    if c == i.ind_id:
-                        children = i.name
-                        recentsurvivors.append(children)
+            for fam in families:
+                if fam.hus_id == death:
+                    for i in individuals:
+                        if fam.wife_id == i.ind_id:
+                            wife_name = i.name
+                            recentsurvivors.append(wife_name)
+                elif fam.wife_id == death:
+                    for fam in families:
+                        for i in individuals:
+                            if fam.hus_id == i.ind_id:
+                                husband_name = i.name
+                                recentsurvivors.append(husband_name)
+            for fam in families:
+                    for c in fam.children:
+                        if c and (fam.wife_id == death or fam.hus_id == death):
+                            for i in individuals:
+                                if c == i.ind_id:
+                                    children = i.name
+                                    recentsurvivors.append(children)
     return recentsurvivors
 
 
