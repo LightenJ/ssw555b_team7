@@ -462,6 +462,25 @@ def list_of_living_single(individuals):
             lstliving_single.append(ind.name)
     return lstliving_single
 
+####US33#### List orphans
+def list_orphans(individuals, families):
+    lst_orphans = []
+    for f in families:
+        for ind in individuals:
+            if ind.ind_id == f.wife_id:
+                wife_death_d = ind.death_d
+            if ind.ind_id == f.hus_id:
+                hus_death_d = ind.death_d
+        if wife_death_d != None and hus_death_d != None:
+            if f.children:
+                for child in f.children:
+                    for ind in individuals:
+                        if ind.ind_id == child:
+                            if ind.spouse_id is None and ind.death_d is None:
+                                age = get_age(ind)
+                                if age < 18:
+                                    lst_orphans.append(ind.name)
+    return lst_orphans
 ####US35####
 
 def list_of_recent_births(birth_dates,individuals):
@@ -519,6 +538,8 @@ def list_of_survivors(individuals, families):
         if fam.children != "None":
             recentsurvivors.append(fam.children)
     return recentsurvivors
+
+
 ####US38 List all living people in a GEDCOM file whose birthdays occur in the next 30 days####
 
 def list_of_upcoming_birthdays(birth_dates,individuals):

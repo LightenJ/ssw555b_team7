@@ -140,6 +140,9 @@ US30 ==> List of living married is :
 US31 ==> List of living single is : 
  ['Stephen /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/', 'Jimmy /Riddle/', 'Ron /Riddle/', 'Hagrid /Riddle/', 'Robert /Riddle/', 'Brad /Riddle/', 'Julia /Riddle/', 'Mike /Riddle/', 'James /Riddle/', 'Cathrine /Riddle/', 'Anna /Riddle/', 'Peter /Riddle/', 'Jack /Riddle/', 'Jaimie /Riddle/', 'Jenny /Riddle/', 'Tommy /Riddle/', 'Ryan /Riddle/', 'James /Franco/', 'Jane /Franco/', 'Billy /Jacob/', 'Arthur /Franco/', 'Matilda /Franco/', 'James /Franco/', 'Jack /Franco/', 'North /Franco/', 'Elle /Franco/', 'Alaia /Franco/', 'Steel /Williams/']
 
+US33 ==>List of Orphans : 
+ []
+
 US35 ==>List of recent births : 
  ['Frank /George/', 'Stephen /George/']
 

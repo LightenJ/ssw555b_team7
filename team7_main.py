@@ -218,6 +218,7 @@ try:
     print("\nUS28 ==> Order siblings by age :", validity_test.order_siblings_by_age(individuals,families))
     print("\nUS30 ==> List of living married is : \n", validity_test.list_of_living_married(individuals))
     print("\nUS31 ==> List of living single is : \n", validity_test.list_of_living_single(individuals))
+    print("\nUS33 ==>List of Orphans : \n", validity_test.list_orphans(individuals, families))
     print("\nUS35 ==>List of recent births : \n", validity_test.list_of_recent_births(read_birth_dates,individuals))
     print("\nUS36 ==>List of recent deaths : \n", validity_test.list_of_recent_deaths(read_death_dates,individuals))
     print("\nUS37 ==>List of recent survivors : \n", validity_test.list_of_survivors(individuals, families))
