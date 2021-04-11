@@ -10,11 +10,11 @@ Individual ID and Name
 | I103 |   LateBirth /Girl/   |  1 AUG 2020 |  1 AUG 2000 |    None   |   None   | -20 |
 | I104 |     Clone /001/      |  1 APR 2020 |     None    |    None   |   None   |  1  |
 | I105 |    Frank /George/    |  1 APR 2021 |  5 APR 1975 |    None   |   None   | -46 |
-| I109 |   Stephen /George/   |  1 APR 2021 |  5 APR 2021 |    F100   |    F5    |  0  |
+| I109 |   Stephen /George/   |  1 APR 2021 |     None    |    F100   |    F5    |  0  |
 | I11  |  Jill /Farstrider/   | 10 MAY 1960 |     None    |     F5    |   None   |  60 |
 | I110 |   Kathy /Williams/   |  3 JUN 1980 |     None    |    F109   |    F5    |  40 |
 | I12  |   Fred /Billiams/    |  1 APR 1991 |     None    |    None   |    F5    |  30 |
-| I13  |    Mark /Sebast/     | 10 MAY 1955 |     None    |     F2    |   None   |  65 |
+| I13  |    Mark /Sebast/     | 10 MAY 1955 |  5 APR 2021 |     F2    |   None   |  65 |
 | I14  | Constance /McKenzie/ | 10 JAN 1952 |     None    |     F2    |   None   |  69 |
 | I15  |    Sarah /Sebast/    | 15 OCT 1982 |     None    |    None   |    F2    |  38 |
 | I16  |    Eric /Sebast/     |  5 AUG 1784 | 12 NOV 2020 |    None   |    F2    | 236 |
@@ -29,7 +29,7 @@ Individual ID and Name
 | I206 |    Brad /Riddle/     | 12 Nov 1997 |     None    |    None   |   F105   |  23 |
 | I207 |    Julia /Riddle/    | 10 DEC 1999 |     None    |    None   |   F105   |  21 |
 | I208 |    Mike /Riddle/     | 12 DEC 1999 |     None    |    None   |   F105   |  21 |
-| I209 |     Cuban /Mark/     |  1 APR 1978 |  5 APR 2021 |    F2B    |    F5    |  43 |
+| I209 |     Cuban /Mark/     |  1 APR 1978 |     None    |    F2B    |    F5    |  43 |
 | I209 |    James /Riddle/    | 12 DEC 2001 |     None    |    None   |   F105   |  19 |
 | I210 |  Cathrine /Riddle/   | 12 DEC 2003 |     None    |    None   |   F105   |  17 |
 | I211 |    Anna /Riddle/     | 12 DEC 2006 |     None    |    None   |   F105   |  14 |
@@ -156,7 +156,7 @@ US25 ==> Duplicate Child by family : [[('12 OCT 2008', 'Abigail /Sebast/'), 'F1'
 US28 ==> Order siblings by age : [[('3 JUN 2005', 'Susan /Williams/'), 'F103'], [('1 APR 1978', 'Cuban /Mark/'), ('12 DEC 1990', 'Jimmy /Riddle/'), ('12 DEC 1992', 'Ron /Riddle/'), ('12 DEC 1993', 'Hagrid /Riddle/'), ('12 DEC 1995', 'Robert /Riddle/'), ('12 Nov 1997', 'Brad /Riddle/'), ('10 DEC 1999', 'Julia /Riddle/'), ('12 DEC 1999', 'Mike /Riddle/'), ('12 DEC 2001', 'James /Riddle/'), ('12 DEC 2003', 'Cathrine /Riddle/'), ('12 DEC 2006', 'Anna /Riddle/'), ('12 DEC 2007', 'Peter /Riddle/'), ('12 DEC 2008', 'Jack /Riddle/'), ('12 DEC 2010', 'Jaimie /Riddle/'), ('12 DEC 2012', 'Jenny /Riddle/'), ('12 DEC 2015', 'Tommy /Riddle/'), ('12 DEC 2018', 'Ryan /Riddle/'), 'F105'], [('15 DEC 2020', 'Billy /Riddle/'), 'F106'], [('12 DEC 2020', 'Sally /Riddle/'), 'F107'], [('16 DEC 2006', 'Zachariah /Sebast/'), ('12 OCT 2008', 'Abigail /Sebast/'), ('12 OCT 2008', 'Abigail /Sebast/'), ('10 APR 2011', 'Stephen /Sebast/'), 'F1'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2'], [('5 AUG 1784', 'Eric /Sebast/'), ('12 DEC 1980', 'Jonathan /Sebast/'), ('15 OCT 1982', 'Sarah /Sebast/'), 'F2B'], [('1 JAN 1978', 'Nancy /Williams/'), ('3 JUN 1980', 'Regena /Williams/'), ('10 JUN 1982', 'Gerri /Williams/'), 'F3'], [('1 APR 1991', 'Fred /Billiams/'), 'F5'], [('12 DEC 1994', 'Billy /Jacob/'), 'F7'], [('10 OCT 1994', 'James /Franco/'), ('10 OCT 1994', 'Jack /Franco/'), ('10 OCT 1994', 'North /Franco/'), ('10 OCT 1994', 'Elle /Franco/'), ('10 OCT 1994', 'Alaia /Franco/'), ('10 OCT 1994', 'Steel /Williams/'), 'F9']]
 
 US30 ==> List of living married is : 
- ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Constance /McKenzie/', 'Kathy /Williams/', 'Tom /Riddle/', 'Martha /Riddle/']
+ ['Jonathan /Sebast/', 'Nancy /Williams/', 'Zachariah /Sebast/', 'Donna /Doubet/', 'Buffalo /Billiams/', 'Buffalo /Billiams/', 'Regena /Williams/', 'Bill /Williams/', 'Susan /Williams/', 'Jill /Farstrider/', 'Constance /McKenzie/', 'Kathy /Williams/', 'Stephen /George/', 'Cuban /Mark/', 'Tom /Riddle/', 'Martha /Riddle/']
 
 US31 ==> List of living single is : 
  ['Stephen /Sebast/', 'Abigail /Sebast/', 'Abigail /Sebast/', 'Gerri /Williams/', 'Fred /Billiams/', 'Sarah /Sebast/', 'Future /Girl/', 'Present /Girl/', 'Clone /001/', 'Jimmy /Riddle/', 'Ron /Riddle/', 'Hagrid /Riddle/', 'Robert /Riddle/', 'Brad /Riddle/', 'Julia /Riddle/', 'Mike /Riddle/', 'James /Riddle/', 'Cathrine /Riddle/', 'Anna /Riddle/', 'Peter /Riddle/', 'Jack /Riddle/', 'Jaimie /Riddle/', 'Jenny /Riddle/', 'Tommy /Riddle/', 'Ryan /Riddle/', 'Billy /Riddle/', 'Sally /Riddle/', 'James /Franco/', 'Jane /Franco/', 'Billy /Jacob/', 'Arthur /Franco/', 'Matilda /Franco/', 'James /Franco/', 'Jack /Franco/', 'North /Franco/', 'Elle /Franco/', 'Alaia /Franco/', 'Steel /Williams/']
@@ -165,10 +165,10 @@ US35 ==>List of recent births :
  ['Frank /George/', 'Stephen /George/']
 
 US36 ==>List of recent deaths : 
- ['Stephen /George/', 'Cuban /Mark/']
+ ['Mark /Sebast/']
 
 US37 ==>List of recent survivors : 
- ['Born /Early/', [], 'Zachariah /Sebast/', []]
+ ['Born /Early/']
 
 US38 ==>List of upcoming Birthdays : 
  ['Stephen /Sebast/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Arthur /Franco/']
