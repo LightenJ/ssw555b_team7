@@ -514,6 +514,7 @@ def list_of_survivors(individuals, families):
     recentsurvivors = []
     wife_name = ""
     husband_name = ""
+    children = []
     x = 0
     while (x < len(individualsId)):
         if (individualsDeathday[x] != None):
@@ -535,8 +536,11 @@ def list_of_survivors(individuals, families):
                     if fam.hus_id == i.ind_id:
                         husband_name = i.name
                 recentsurvivors.append(husband_name)
-        if fam.children != "None":
-            recentsurvivors.append(fam.children)
+            if fam.children != "None":
+                for i,c in zip(individuals,fam.children):
+                    if c == i.ind_id:
+                        children = i.name
+                        recentsurvivors.append(children)
     return recentsurvivors
 
 
