@@ -168,7 +168,7 @@ US36 ==>List of recent deaths :
  ['Mark /Sebast/']
 
 US37 ==>List of recent survivors : 
- ['Born /Early/']
+ ['Constance /McKenzie/', 'Constance /McKenzie/', 'Jonathan /Sebast/', 'Sarah /Sebast/', 'Eric /Sebast/', 'Jonathan /Sebast/', 'Sarah /Sebast/', 'Eric /Sebast/']
 
 US38 ==>List of upcoming Birthdays : 
  ['Stephen /Sebast/', 'Jill /Farstrider/', 'Mark /Sebast/', 'Arthur /Franco/']
