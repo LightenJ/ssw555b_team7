@@ -8,7 +8,8 @@ from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births,list_of_survivors
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
-from validity_test import get_age, married_to_aunt_or_uncle
+from validity_test import get_age, married_to_aunt_or_uncle, birth_should_be_before_death_of_parents
+from validity_test import get_birth, get_death, births_should_be_spaced_appropriately
 
 
 class Test(TestCase):
@@ -153,14 +154,76 @@ class Test(TestCase):
         self.assertNotEqual(US05_marriage_before_death("1 JUL 1990", "5 AUG 1784", "Eric Sebast"), "")
         self.assertNotEqual(US05_marriage_before_death("12 NOV 1980", "5 AUG 1784", "Eric Sebast"), "")
 
-####US08#####
-# This test verifies that the individual is not born before his/her parents were married.
+
+    ####US09#####
+    # This test verifies that the individual is not born before his/her parents were married.
+    def test_birth_should_be_before_death_of_parents(self):
+        june_1_2019 = datetime(2019, 6, 1)
+        jan_1_2019 = datetime(2019, 1, 1)
+        jan_1_2020 = datetime(2020, 1, 1)
+        jan_2_2020 = datetime(2020, 1, 2)
+
+        # Parents not dead
+        self.assertEqual(birth_should_be_before_death_of_parents("I1", jan_1_2020, None, None), "")
+
+        # Unknown birth date
+        self.assertEqual(birth_should_be_before_death_of_parents("I2", None, jan_1_2020, jan_1_2020), "")
+
+        # Parents died later
+        self.assertEqual(birth_should_be_before_death_of_parents("I3", jan_1_2020, jan_2_2020, jan_2_2020), "")
+
+        # Parents died on the same day (possible)
+        self.assertEqual(birth_should_be_before_death_of_parents("I4", jan_1_2020, jan_1_2020, jan_1_2020), "")
+
+        # Father died less than and more than 9 months earlier
+        self.assertEqual(birth_should_be_before_death_of_parents("I5", jan_2_2020, jan_2_2020, june_1_2019), "")
+        self.assertNotEqual(birth_should_be_before_death_of_parents("I6", jan_2_2020, jan_2_2020, jan_1_2019), "")
+
+        # Mother died earlier
+        self.assertNotEqual(birth_should_be_before_death_of_parents("I7", jan_2_2020, june_1_2019, jan_2_2020), "")
+
+        # Both died earlier
+        self.assertNotEqual(birth_should_be_before_death_of_parents("I8", jan_2_2020, jan_1_2020, jan_1_2019), "")
+
+
+    ####US13#####
+    # This test verifies that births in a family are spaced appropriately.
+    def test_births_should_be_spaced_appropriately(self):
+        child_births: Dict[str, datetime] = {}
+
+        oct_1_2018 = datetime(2018, 10, 1)
+        jan_1_2019 = datetime(2019, 1, 1)
+        jan_2_2019 = datetime(2019, 1, 2)
+        sept_15_2019 = datetime(2019, 9, 15)
+
+        # No children
+        self.assertEqual(births_should_be_spaced_appropriately("F1", child_births), "")
+
+        child_births["I1"] = jan_1_2019
+
+        # One child
+        self.assertEqual(births_should_be_spaced_appropriately("F2", child_births), "")
+
+        # Twins, one day apart
+        child_births["I2"] = jan_2_2019
+        self.assertEqual(births_should_be_spaced_appropriately("F3", child_births), "")
+
+        # 9 month(ish) separation
+        child_births["I3"] = sept_15_2019
+        self.assertEqual(births_should_be_spaced_appropriately("F4", child_births), "")
+
+        # Too close
+        child_births["I4"] = oct_1_2018
+        self.assertNotEqual(births_should_be_spaced_appropriately("F5", child_births), "")
+
+
+    ####US08#####
+    # This test verifies that the individual is not born before his/her parents were married.
     def test_birth_before_marriage_of_parents(self):
         self.assertEqual(birth_before_marriage_of_parents("6 may 2005", "6 APR 2001", "Eric Sebast"), "")
         self.assertEqual(birth_before_marriage_of_parents("5 sep 1790", "5 AUG 1785", "Eric Sebast"), "")
         self.assertNotEqual(birth_before_marriage_of_parents("6 may 1990", "6 APR 2001", "Eric Sebast"), "")
         self.assertNotEqual(birth_before_marriage_of_parents("5 Jan 1785", "5 AUG 1785", "Eric Sebast"), "")
-
 
     ####US22##### Unique ID's --> All individual IDs should be unique and all family IDs should be unique
     def test_unique_ids(self):
@@ -314,9 +377,9 @@ class Test(TestCase):
         ind3.name = 'HUS2'
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
-        self.assertTrue(list_of_recent_births(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["30 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertTrue(list_of_recent_births(["16 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["31 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
     ####US36#####
@@ -330,7 +393,7 @@ class Test(TestCase):
         ind3.name = 'HUS2'
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
-        self.assertTrue(list_of_recent_deaths(["18 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_deaths(["30 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_deaths(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_recent_deaths(["12 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_deaths(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")

@@ -112,6 +112,25 @@ def check_valid(individuals: List[Individual], families: List[Family]):
         if len(temp_error_status) > 0:
             error_statuses.append(temp_error_status)
 
+    # check for children born after the death of parents
+    for family in families:
+        father_death = get_death(family.hus_id, individuals)
+        mother_death = get_death(family.wife_id, individuals)
+        for child in family.children:
+            child_birth = get_birth(child, individuals)
+            temp_error_status = birth_should_be_before_death_of_parents(child, child_birth, mother_death, father_death)
+            if len(temp_error_status) > 0:
+                error_statuses.append(temp_error_status)
+
+    # check for children too closely together
+    for family in families:
+        child_births: Dict[str, datetime] = {}
+        for child in family.children:
+            child_births[child] = get_birth(child, individuals)
+        temp_error_status = births_should_be_spaced_appropriately(family.fam_id, child_births)
+        if len(temp_error_status) > 0:
+            error_statuses.append(temp_error_status)
+
     return error_statuses
 
 
@@ -124,6 +143,24 @@ def convert_date(input_date: str):
         converted_date = None
 
     return converted_date
+
+
+# Get the death date of an individual
+def get_death(ind_id: str, individuals: List[Individual]):
+    return_value = None
+    for ind in individuals:
+        if ind.ind_id == ind_id:
+            return_value = convert_date(ind.death_d)
+    return return_value
+
+
+# Get the birth date of an individual
+def get_birth(ind_id: str, individuals: List[Individual]):
+    return_value = None
+    for ind in individuals:
+        if ind.ind_id == ind_id:
+            return_value = convert_date(ind.birth_d)
+    return return_value
 
 
 def get_age(ind : Individual):
@@ -345,6 +382,54 @@ def birth_before_marriage_of_parents(birth_date: str, marriage_date: str, name: 
         birth_date = convert_date(birth_date)
         if day_difference(birth_date, marriage_date) < 0:
             my_error = "Error: US#08: " + name + " was born before his/her parents were married.\n"
+
+    return my_error
+
+
+# User story 9, check for a child born after his or her parents died.
+def birth_should_be_before_death_of_parents(child_id: str, birth_date: date, mother_death: date, father_death: date):
+    my_error = ""
+    mother_error = False
+    father_error = False
+
+    # Days are more accurate than months in this case
+    gestation_period_days = 280
+
+    if birth_date:
+        if mother_death:
+            if mother_death < birth_date:
+                mother_error = True
+        if father_death:
+            if day_difference(father_death, birth_date) < -gestation_period_days:
+                father_error = True
+
+        if mother_error or father_error:
+            my_error = "Error: US#09: " + child_id + " was born after "
+            if mother_error and father_error:
+                my_error += "both his/her parents had died."
+            elif mother_error:
+                my_error += "his/her mother died."
+            else:
+                my_error += "his/her father died."
+
+    return my_error
+
+
+# User story 13, check for births (that aren't multiple births) too close together.
+def births_should_be_spaced_appropriately(family_id: str, child_births: Dict[str, datetime]):
+    my_error = ""
+
+    days_in_eight_months = 240
+    found_invalid_birth_spacing = False
+
+    for bdate in child_births:
+        for bdate2 in child_births:
+            if child_births[bdate] and child_births[bdate2]:
+                abs_date_difference = abs(day_difference(child_births[bdate], child_births[bdate2]))
+                if 1 < abs_date_difference < days_in_eight_months:
+                    found_invalid_birth_spacing = True
+    if found_invalid_birth_spacing:
+        my_error = "Error: US#13: " + family_id + " has children that were born too close to each other.\n"
 
     return my_error
 
