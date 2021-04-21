@@ -3,7 +3,7 @@ from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age
 from validity_test import birthbeforedeath, unique_families_by_spouses, us16_male_last_names, us14_multiple_births_less_than_5
-from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings
+from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings,list_of_deceased_individuals,list_orphans
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry,list_of_anniversaries
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births,list_of_survivors
 from datetime import datetime, timedelta
@@ -365,7 +365,44 @@ class Test(TestCase):
         #family with no Children
         self.assertEqual(order_siblings_by_age((ind1, ind2, ind3, ind4), (fam1,fam3 )), [])#
 
+    ####US29#####
+    # This test verifies that these individuals are deceased in the input Gedcom file
+    def test_list_of_deceased_individuals(self):
+        ind1 = Individual("I8")
+        ind1.name = 'IND1'
+        ind2 = Individual("I12")
+        ind2.name = 'IND2'
+        ind3 = Individual("I6")
+        ind3.name = 'IND3'
+        ind4 = Individual("I16")
+        ind4.name = 'IND4'
+        ind5 = Individual("I15")
+        ind5.name = 'IND5'
+        self.assertFalse(list_of_deceased_individuals((ind1,ind3)), "")
+        self.assertFalse(list_of_deceased_individuals((ind2, ind5)), "")
 
+
+    ####US33#####
+    # This test verifies that these individuals are orphans
+    def test_list_orphans(self):
+        ind1 = Individual("I5")
+        ind1.name = 'IND1'
+        ind2 = Individual("I5")
+        ind2.name = 'IND2'
+        ind3 = Individual("I7")
+        ind3.name = 'IND3'
+        ind4 = Individual("I5")
+        ind4.name = 'IND4'
+        fam1 = Family('F2')
+        fam1.children = ['I5', 'I5']
+        fam2 = Family('F2')
+        fam2.children = ['I5', 'I5']
+        fam3 = Family('F03')
+        fam3.children = 'I01'
+        self.assertFalse(list_orphans([ind1,ind2], [fam1,fam2]),"")
+        self.assertFalse(list_orphans((ind1, ind2, ind3, ind4), (fam1, fam2)), "")
+        self.assertFalse(list_orphans((ind3, ind4), (fam1, fam3)), "")
+        self.assertFalse(list_orphans((ind1, ind2,ind4), (fam2, fam3)), "")
     ####US35#####
     # This test verifies that these individuals are dead within last 30 days or not
     def test_list_of_recent_births(self):
@@ -377,9 +414,9 @@ class Test(TestCase):
         ind3.name = 'HUS2'
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
-        self.assertTrue(list_of_recent_births(["30 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["15 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertTrue(list_of_recent_births(["31 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_births(["14 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
     ####US36#####
@@ -393,9 +430,9 @@ class Test(TestCase):
         ind3.name = 'HUS2'
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
-        self.assertTrue(list_of_recent_deaths(["30 MAR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_deaths(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_recent_deaths(["12 APR 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_deaths(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertTrue(list_of_recent_deaths(["15 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_deaths(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
         ####US37#####

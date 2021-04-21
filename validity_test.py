@@ -529,6 +529,15 @@ def order_siblings_by_age(individuals, families):
             child_order_for_family.append(f_sorted)
     return child_order_for_family
 
+####US29####
+
+def list_of_deceased_individuals(individuals):
+    lstdeceased_indi = []
+    for ind in individuals:
+        if ind.death_d is not None:
+            lstdeceased_indi.append(ind.name)
+    return lstdeceased_indi
+
 ####US30####
 
 def list_of_living_married(individuals):
@@ -550,6 +559,8 @@ def list_of_living_single(individuals):
 ####US33#### List orphans
 def list_orphans(individuals, families):
     lst_orphans = []
+    wife_death_d = None
+    hus_death_d = None
     for f in families:
         for ind in individuals:
             if ind.ind_id == f.wife_id:
