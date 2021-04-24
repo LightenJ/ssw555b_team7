@@ -577,8 +577,39 @@ def list_orphans(individuals, families):
                                 if age < 18:
                                     lst_orphans.append(ind.name)
     return lst_orphans
-####US35####
 
+
+
+def get_age_based_on_date(mar_d, birth_d):
+    return_value = "Unknown"
+    birth_date = convert_date(birth_d)
+    mar_date = convert_date(mar_d)
+    if birth_date is not None and mar_date is not None:
+        return_value = year_difference(mar_date, birth_date)
+    return return_value
+
+
+####US34#### List large age differences
+def List_large_age_differences(individuals, families):
+    List_large_age_diff =[]
+    for f in families:
+        marriage_date = f.marriage_d
+        for ind in individuals:
+            if ind.ind_id == f.wife_id:
+                wife_age_at_mar = get_age_based_on_date(marriage_date, ind.birth_d)
+                wife_n = ind.name
+            if ind.ind_id == f.hus_id:
+                hus_age_at_mar = get_age_based_on_date(marriage_date, ind.birth_d)
+                hus_n = ind.name
+        if wife_age_at_mar > 2*hus_age_at_mar:
+            details = ["wife older", marriage_date,  wife_n, wife_age_at_mar, hus_n, hus_age_at_mar]
+            List_large_age_diff.append(details)
+        if hus_age_at_mar > 2*wife_age_at_mar:
+            details = ["Husband older", marriage_date, hus_n, hus_age_at_mar, wife_n,wife_age_at_mar]
+            List_large_age_diff.append(details)
+    return List_large_age_diff
+
+####US36####
 def list_of_recent_births(birth_dates,individuals):
     lstrecent_birth = []
     for (birth,ind) in zip(birth_dates,individuals):
@@ -816,4 +847,3 @@ def us14_multiple_births_less_than_5(individuals, families):
                 my_error = "Error: US14: Family " + family.fam_id + " has more than 5 siblings born at once."
 
     return my_error
-

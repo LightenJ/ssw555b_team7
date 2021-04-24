@@ -9,7 +9,7 @@ from validity_test import correct_gender_for_role, married_first_cousins,list_of
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
 from validity_test import get_age, married_to_aunt_or_uncle, birth_should_be_before_death_of_parents
-from validity_test import get_birth, get_death, births_should_be_spaced_appropriately
+from validity_test import get_birth, get_death, births_should_be_spaced_appropriately, List_large_age_differences
 
 
 class Test(TestCase):
@@ -700,7 +700,39 @@ class Test(TestCase):
         self.assertEqual(us14_multiple_births_less_than_5((ind1, ind2, ind3, ind4, ind5), (fam1, fam2)), "")
         self.assertEqual(us14_multiple_births_less_than_5((ind1, ind2, ind3, ind4), (fam1, fam2)), "")
 
+    ####US34#### List large age differences
+    def test_List_large_age_differences(self):
+        ind1 = Individual("I01")
+        ind1.name = 'HUS1'
+        ind1.birth_d = '5 Jun 1950'
+        ind2 = Individual("I02")
+        ind2.name = 'WIFE1'
+        ind2.birth_d = '5 Mar 1955'
+        ind3 = Individual("I03")
+        ind3.name = 'HUS2'
+        ind3.birth_d = '5 Jun 1990'
+        ind4 = Individual("I04")
+        ind4.name = 'WIFE2'
+        ind4.birth_d = '5 Jun 1990'
+        fam1 = Family('F01')
+        fam1.hus_id = 'I01'
+        fam1.wife_id = 'I02'
+        fam1.marriage_d = '22 FEB 1980'
+        fam2 = Family('F02')
+        fam2.hus_id = 'I03'
+        fam2.wife_id = 'I04'
+        fam2.marriage_d = '23 FEB 2021'
+        self.assertEqual(List_large_age_differences((ind1, ind2, ind3, ind4), (fam1, fam2)),[])
+        # equal to 2*
+        ind4.birth_d = '5 Jun 1960'
+        self.assertEqual(List_large_age_differences((ind1, ind2, ind3, ind4), (fam1, fam2)),[])
 
+        #grether than 2* Hus
+        ind4.birth_d = '5 Jun 1959'
+        self.assertEqual(List_large_age_differences((ind1, ind2, ind3, ind4), (fam1, fam2)),[['wife older', '23 FEB 2021','WIFE2', 61, 'HUS2', 30]])
 
-
+        #grether than 2* Wife
+        ind3.birth_d = '5 Jun 1959'
+        ind4.birth_d = '5 Jun 1990'
+        self.assertEqual(List_large_age_differences((ind1, ind2, ind3, ind4), (fam1, fam2)),[['Husband older', '23 FEB 2021', 'HUS2', 61, 'WIFE2', 30]])
 
