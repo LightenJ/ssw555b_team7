@@ -415,7 +415,7 @@ class Test(TestCase):
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_recent_births(["15 APR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_births(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_births(["27 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_recent_births(["14 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_births(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
@@ -431,7 +431,7 @@ class Test(TestCase):
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_recent_deaths(["12 APR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_recent_deaths(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_recent_deaths(["27 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_recent_deaths(["15 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_recent_deaths(["5 APR 1985"], (ind1, ind2, ind3, ind4)), "")
 
@@ -470,7 +470,7 @@ class Test(TestCase):
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_upcoming_birthdays(["18 APR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_upcoming_birthdays(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_upcoming_birthdays(["27 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_upcoming_birthdays(["16 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_upcoming_birthdays(["5 JAN 1985"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_upcoming_birthdays(["5 DEC 1985"], (ind1, ind2, ind3, ind4)), "")
@@ -487,7 +487,7 @@ class Test(TestCase):
         ind4 = Individual("I04")
         ind4.name = 'WIFE2'
         self.assertTrue(list_of_anniversaries(["18 APR 2021"], (ind1, ind2, ind3, ind4)), "")
-        self.assertFalse(list_of_anniversaries(["25 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
+        self.assertFalse(list_of_anniversaries(["27 MAY 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertTrue(list_of_anniversaries(["16 APR 2021"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_anniversaries(["5 JAN 1985"], (ind1, ind2, ind3, ind4)), "")
         self.assertFalse(list_of_anniversaries(["5 DEC 1985"], (ind1, ind2, ind3, ind4)), "")

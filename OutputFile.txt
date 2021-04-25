@@ -270,6 +270,9 @@ US31 ==> List of living single is :
 US33 ==>List of Orphans : 
  ['Abigail /Sebast/']
 
+US34 ==>List large age differences : 
+ [['Husband older', '16 APR 2019', 'Born /Early/', 71, 'LateBirth /Girl/', -2], ['Husband older', '1 MAY 2021', 'Bogart /Eddington/', 78, 'Susan /Williams/', 15], ['Husband older', '1 JAN 2020', 'Claire /Kayden/', 49, 'Julia /Riddle/', 20], ['wife older', '2 JAN 2020', 'Present /Girl/', 34, 'Ryan /Riddle/', 1], ['Husband older', '1 JAN 2021', 'Billy /Riddle/', 0, 'Jenny /Riddle/', -1], ['Husband older', '2 JAN 2021', 'Ron /Riddle/', 28, 'Sally /Riddle/', 0], ['wife older', '6 APR 2002', 'Al /Fox/', 43, 'Robert /Fox/', 14], ['wife older', '2 FEB 1975', 'Alice /Fox-Eddington/', -21, 'Carrie /Fox-Eddington/', -27], ['Husband older', '2 FEB 1975', 'Carrie /Fox-Eddington/', -27, 'Alice /Fox-Eddington/', -21], ['wife older', '1 JUL 1990', 'Jill /Farstrider/', 30, 'Tim /Hopkins/', 0], ['Husband older', '23 NOV 1968', 'Al /Fox/', 10, 'Claire /Kayden/', -2], ['Husband older', '21 JUN 1990', 'Bogart /Eddington/', 47, 'Claire /Kayden/', 20]]
+
 US35 ==>List of recent births : 
  ['Frank /George/', 'Stephen /George/']
 
@@ -287,6 +290,9 @@ US39 ==>List of upcoming anniversaries :
 
 US14 ==> Multiple births less than or equal to 5 : 
  Error: US14: Family F9 has more than 5 siblings born at once.
+
+US32 ==> List of Multiple births in a family : 
+ [['10 OCT 1994', 'James /Franco/'], ['10 OCT 1994', 'Jack /Franco/'], ['10 OCT 1994', 'North /Franco/'], ['10 OCT 1994', 'Elle /Franco/'], ['10 OCT 1994', 'Alaia /Franco/'], ['10 OCT 1994', 'Steel /Williams/']]
 
 US16 ==> Male last names : 
  Error: US16: Timothy /Williams/'s lastname is not same as his/her/their father's.
