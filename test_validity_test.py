@@ -1,7 +1,7 @@
 from typing import Dict
 from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
-from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age
+from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age, us42_reject_illegitimate_dates
 from validity_test import birthbeforedeath, unique_families_by_spouses, us16_male_last_names, us14_multiple_births_less_than_5
 from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings,list_of_deceased_individuals,list_orphans
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry,list_of_anniversaries,US11_NoBigamy
@@ -809,5 +809,16 @@ class Test(TestCase):
 
         self.assertEqual(List_multiple_births((ind1, ind2, ind3, ind4,  ind5, ind6, ind7, ind8), (fam1, fam2, fam3)),[['5 Jun 1990', 'Child7'] , ['5 Jun 1990', 'Child8']])
         
+    # # User story 42, Reject illegitimate dates
+    def test_us42_reject_illegitimate_dates(self):
+        ind1 = Individual("I01")
+        ind1.birth_d = '05 JUN 2050'
+        ind2 = Individual("I02")
+        ind2.birth_d = '09 MAR 2055'
+
+        self.assertNotEqual(us42_reject_illegitimate_dates([ind1, ind2]), "True")
+        ind2.birth_d = '12 MAR 2055'
+        self.assertNotEqual(us42_reject_illegitimate_dates([ind1, ind2]), "True")
+
         
          
