@@ -816,5 +816,5 @@ class Test(TestCase):
                         'FAMS': {1: '@F1@'}, 'FAMC': {1: '@I4@'}}}
 
         # for i in range(1):
-        self.assertNotEqual(us41_accept_partial_dates(ind, fam), "True")
+        self.assertNotEqual(us41_accept_partial_dates(ind), "True")
 
