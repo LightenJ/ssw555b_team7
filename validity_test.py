@@ -894,3 +894,40 @@ def List_multiple_births(individuals, families):
 
     return my_error
 
+#  # User story 42, Reject illegitimate dates
+def us42_reject_illegitimate_dates(individuals):
+    my_error = ""
+    month = [1,3,5,7,8,10,12]
+
+    for ind in individuals:
+        fib = 0
+        if ind.death_d != None:
+            death_d = convert_date(ind.birth_d)
+            d_day = death_d.day
+            d_month = death_d.month
+            d_year = death_d.year
+
+            # year
+            if d_year > 0 and d_year <= 2021:
+                fib = fib + 1
+
+            # month
+            if d_month > 0 and d_month <= 12:
+                fib = fib + 1
+
+            if d_month == 2 and d_day <=28 and d_year <=2021:
+                my_error = "Error: US42: Individual " + ind.ind_id + "'s Death date is in illegitimate date format"
+
+            if d_month in month and d_day <= 31:
+                my_error = "Error: US42: Individual " + ind.ind_id +"'s Death date is in illegitimate date format"
+
+            # day
+            if d_day > 0 and d_day <= 31:
+                fib = fib + 1
+
+            if fib != 3:
+                my_error = "Error: US42: Individual " + ind.ind_id +"'s Death date is in illegitimate date format"
+
+
+    return my_error
+
