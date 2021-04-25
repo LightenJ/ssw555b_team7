@@ -63,7 +63,7 @@ Individual ID and Name
 |  I5  |  Rosa /Fox-Eddington/  |  2 FEB 1992 |     None    |    None   |    F2    |  29 |
 | I50  |    Susan /Williams/    |  3 JUN 2005 |     None    |    F102   |   F101   |  15 |
 |  I6  | Carrie /Fox-Eddington/ |  2 FEB 2002 |  2 MAY 2015 |     F3    |    F2    |  13 |
-|  I6  |   Timothy /Williams/   |  1 JAN 1950 |  1 APR 2020 |     F3    |   None   |  70 |
+|  I6  |   Timothy /Williams/   |  1 JAN 1950 | 32 APR 2020 |     F3    |   None   |  71 |
 |  I7  | Alice /Fox-Eddington/  | 27 MAR 1995 |     None    |    None   |    F2    |  26 |
 |  I7  |     Donna /Doubet/     |  1 JAN 1948 |     None    |     F4    |   None   |  73 |
 |  I8  |   Buffalo /Billiams/   |  2 JAN 1952 |     None    |     F5    |   None   |  69 |
@@ -97,7 +97,7 @@ Individual ID and Name
 |  F9  |    Arthur /Franco/     |    Matilda /Franco/   |                          I402,I403,I404,I405,I406,I407                          |
 +------+------------------------+-----------------------+---------------------------------------------------------------------------------+
 
-US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is : False
+US01 ==> Dates (Birth, Death, Marriage, Divorce) Before Today is : None
 Error: US#02: Individual Nancy /Williams/ was married before they were born.
 
 Error: US#10: Nancy /Williams/ was married when younger than 14.

@@ -254,9 +254,11 @@ def younger_than_150(birth_date: str, death_date: str, name: str):
 
 
 def year_difference(date1: datetime.date, date2: datetime.date):
-    years_diff = date1.year - date2.year
-    if date2.month > date1.month or (date1.month == date2.month and date2.day > date1.day):
-        years_diff = years_diff - 1
+    years_diff = 0
+    if date1 is not None and date2 is not None:
+        years_diff = date1.year - date2.year
+        if date2.month > date1.month or (date1.month == date2.month and date2.day > date1.day):
+            years_diff = years_diff - 1
     return years_diff
 
 
@@ -269,8 +271,8 @@ def date_before(dates):
     valid = True
     try:
         for date in dates:
-            if date != None:
-                f_date = datetime.strptime(date.rstrip(), '%d %b %Y').date()
+            if not date_is_invalid(date):
+                f_date = convert_date(date)
                 c_date = datetime.now().date()
                 if f_date > c_date:
                     valid = False
@@ -624,7 +626,7 @@ def list_of_recent_births(birth_dates,individuals):
 def list_of_recent_deaths(death_dates,individuals):
     lstrecent_deaths = []
     for (deaths,ind) in zip(death_dates,individuals):
-        if deaths is not None:
+        if not date_is_invalid(deaths):
             _date = convert_date(deaths)
             death = abs((_date - datetime.today()).days)
             if death < 30:
@@ -640,7 +642,7 @@ def list_of_survivors(individuals, families):
     recentsurvivors = []
     x = 0
     while (x < len(individualsId)):
-        if (individualsDeathday[x] != None):
+        if not date_is_invalid(individualsDeathday[x]):
             _date = convert_date(individualsDeathday[x])
             death = abs((_date - datetime.today()).days)
             if death < 30:
