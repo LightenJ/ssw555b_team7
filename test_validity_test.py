@@ -1,8 +1,8 @@
 from typing import Dict
 from unittest import TestCase
 from validity_test import younger_than_150, date_before, unique_ids
-from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age, us42_reject_illegitimate_dates
-from validity_test import birthbeforedeath, unique_families_by_spouses, us16_male_last_names, us14_multiple_births_less_than_5, us41_accept_partial_dates
+from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age
+from validity_test import birthbeforedeath, unique_families_by_spouses, us16_male_last_names, us14_multiple_births_less_than_5
 from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings,list_of_deceased_individuals,list_orphans
 from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry,list_of_anniversaries
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births,list_of_survivors
@@ -786,35 +786,4 @@ class Test(TestCase):
         self.assertEqual(List_multiple_births((ind1, ind2, ind3, ind4,  ind5, ind6, ind7, ind8), (fam1, fam2, fam3)),[['5 Jun 1990', 'Child7'] , ['5 Jun 1990', 'Child8']])
         
         
-         # # User story 42, Reject illegitimate dates
-    def test_us42_reject_illegitimate_dates(self):
-
-
-        ind = {'@I1@': {'Name': 'Smit /Nawar/', 'Gender': 'M', 'BIRTH DATE': '31 MAY 2023', 'DEATH DATE': '37 OCT 2098',
-                        'FAMS': {1: '@F1@'}, 'FAMC': {1: '@I4@'}},
-               '@I2@': {'Name': 'Yi Xie /Nawar/', 'Gender': 'F', 'BIRTH DATE': '32 MAY 2023', 'DEATH DATE': '39 MAY 2067',
-                        'FAMS': {1: '@F1@'}, 'FAMC': {1: '@I4@'}}}
-        fam = {'@F1@': {'Married': '32 OCT 2065', 'Divorced': '43 MAY 2023', 'Husband Id': '@I1@',
-                        'Husband Name': 'Smit /Nawar/', 'Wife Id': '@I2@', 'Wife Name': 'Yi Xie /Nawar/',
-                        'Children': {1: '@I4@'}}}
-
-        # for i in range(1):
-        self.assertNotEqual(us42_reject_illegitimate_dates(ind), "True")
-
-    # # # User story 41, Accept partial dates
-    def test_us41_accept_partial_dates(self):
-        fam = {'@F1@': {'BIRTH DATE': 'None', 'Husband Id': '@I1@',
-                        'Husband Name': 'Smit /Nawar/', 'Wife Id': '@I2@', 'Wife Name': 'Yi Xie /Nawar/',
-                        'Children': {1: '@I4@'}},
-               '@F2@': {'Married': '1991-09', 'Husband Id': '@I1@',
-                        'Husband Name': 'Ron /Nawar/', 'Wife Id': '@I2@', 'Wife Name': 'Yi Xie /Nawar/',
-                        'Children': {1: '@I4@'}}
-               }
-        ind = {'@I1@': {'Name': 'Smit /Nawar/', 'Gender': 'M', 'BIRTH DATE': '2000-01-77', 'DEATH DATE': '2000-08-322',
-                        'FAMS': {1: '@F1@'}, 'FAMC': {1: '@I4@'}},
-               '@I2@': {'Name': 'Yi Xie /Nawar/', 'Gender': 'F', 'BIRTH DATE': '3023-33-04', 'DEATH DATE': '2000-08-05',
-                        'FAMS': {1: '@F1@'}, 'FAMC': {1: '@I4@'}}}
-
-        # for i in range(1):
-        self.assertNotEqual(us41_accept_partial_dates(ind), "True")
-
+         
