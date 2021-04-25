@@ -296,4 +296,7 @@ US32 ==> List of Multiple births in a family :
 
 US16 ==> Male last names : 
  Error: US16: Timothy /Williams/'s lastname is not same as his/her/their father's.
+
+US42 ==> Illegitimate dates : 
+ Error: US42: Individual I8's Death date is in illegitimate date format
 ERROR: FAMILY: US11: Marriage should not occur during marriage to another spouse F2 and F102
