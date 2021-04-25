@@ -4,7 +4,7 @@ from validity_test import younger_than_150, date_before, unique_ids
 from validity_test import birthbeforemarriage, unique_name_and_birth_date, unique_families_by_child, order_siblings_by_age
 from validity_test import birthbeforedeath, unique_families_by_spouses, us16_male_last_names, us14_multiple_births_less_than_5
 from validity_test import divorce_before_death, birth_before_marriage_of_parents, us15_fewer_than_15_siblings,list_of_deceased_individuals,list_orphans
-from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry,list_of_anniversaries
+from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US05_marriage_before_death, us18_siblings_shud_not_marry,list_of_anniversaries,US11_NoBigamy
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births,list_of_survivors
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
@@ -185,6 +185,30 @@ class Test(TestCase):
         # Both died earlier
         self.assertNotEqual(birth_should_be_before_death_of_parents("I8", jan_2_2020, jan_1_2020, jan_1_2019), "")
 
+    ####US11##### No Bigamy
+    def test_US11_NoBigamy(self):
+        fam1 = Family('F2')
+        fam1.hus_id = 'I01'
+        fam1.wife_id = 'I02'
+        fam1.marriage_d = '6 APR 2002'
+        fam1.divorce_d = '1 JAN 2003'
+        fam2 = Family('F102')
+        fam2.hus_id = 'I03'
+        fam2.wife_id = 'I04'
+        fam2.marriage_d = '23 NOV 1968'
+        fam2.divorce_d = '22 FEB 2014'
+        fam3 = Family('F03')
+        fam3.hus_id = 'I01'
+        fam3.wife_id = 'I02'
+        fam3.marriage_d = '23 NOV 1968'
+        fam3.divorce_d = '22 FEB 2014'
+        fam4 = Family('F10')
+        fam4.hus_id = 'I02'
+        fam4.wife_id = 'I02'
+        fam4.marriage_d = '21 JUN 1990'
+        fam4.divorce_d = '22 FEB 2014'
+        self.assertEqual(US11_NoBigamy(fam1, fam2), True)
+        self.assertEqual(US11_NoBigamy(fam3, fam4), False)
 
     ####US13#####
     # This test verifies that births in a family are spaced appropriately.

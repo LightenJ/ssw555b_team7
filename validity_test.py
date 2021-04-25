@@ -416,6 +416,22 @@ def birth_should_be_before_death_of_parents(child_id: str, birth_date: date, mot
     return my_error
 
 
+
+#US11
+
+def US11_NoBigamy(family1, family2):
+    if (family1 is None or family2 is None):
+        return True
+    if (family1.marriage_d > family2.marriage_d):
+        if (family1.divorce_d is None):
+            return False
+        elif (family1.divorce_d < family2.marriage_d):
+            return True
+        else:
+            print("ERROR: FAMILY: US11: Marriage should not occur during marriage to another spouse " + family1.fam_id +" and " + family2.fam_id)
+            return False
+
+
 # User story 13, check for births (that aren't multiple births) too close together.
 def births_should_be_spaced_appropriately(family_id: str, child_births: Dict[str, datetime]):
     my_error = ""
