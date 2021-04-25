@@ -8,8 +8,8 @@ from validity_test import married_at_14_or_older,US04_marriage_before_divorce,US
 from validity_test import correct_gender_for_role, married_first_cousins,list_of_upcoming_birthdays,list_of_recent_deaths,list_of_recent_births,list_of_survivors
 from datetime import datetime, timedelta
 from data_classes import Individual, Family, Ancestors
-from validity_test import get_age, married_to_aunt_or_uncle, birth_should_be_before_death_of_parents
-from validity_test import get_birth, get_death, births_should_be_spaced_appropriately, List_large_age_differences
+from validity_test import get_age, married_to_aunt_or_uncle, birth_should_be_before_death_of_parents, List_large_age_differences
+from validity_test import births_should_be_spaced_appropriately, List_multiple_births
 
 
 class Test(TestCase):
@@ -736,3 +736,51 @@ class Test(TestCase):
         ind4.birth_d = '5 Jun 1990'
         self.assertEqual(List_large_age_differences((ind1, ind2, ind3, ind4), (fam1, fam2)),[['Husband older', '23 FEB 2021', 'HUS2', 61, 'WIFE2', 30]])
 
+    # User story 32, List multiple births
+    def test_List_multiple_births(self):
+        ind1 = Individual("I01")
+        ind1.name = 'HUS1'
+        ind1.birth_d = '5 Jun 1950'
+        ind2 = Individual("I02")
+        ind2.name = 'WIFE1'
+        ind2.birth_d = '5 Mar 1955'
+        ind3 = Individual("I03")
+        ind3.name = 'HUS2'
+        ind3.birth_d = '5 Jun 1990'
+        ind4 = Individual("I04")
+        ind4.name = 'WIFE2'
+        ind4.birth_d = '5 Jun 1990'
+        ind5 = Individual("I05")
+        ind6 = Individual("I06")
+        ind5.name = 'Child1'
+        ind6.name = 'Child2'
+        ind7 = Individual("I07")
+        ind8 = Individual("I08")
+        ind9 = Individual("I09")
+        ind7.name = 'Child7'
+        ind8.name = 'Child8'
+        ind9.name = 'Child8'
+        ind7.birth_d = '5 Jun 1990'
+        ind8.birth_d = '5 Jun 1991'
+        ind9.birth_d = '5 Jun 1991'
+
+        fam1 = Family('F01')
+        fam1.hus_id = 'I01'
+        fam1.wife_id = 'I02'
+        fam1.marriage_d = '22 FEB 1980'
+        fam2 = Family('F02')
+        fam2.hus_id = 'I03'
+        fam2.wife_id = 'I04'
+        fam2.children = ["I06", "I07"]
+        fam2.marriage_d = '23 FEB 2021'
+
+        fam3 = Family('F03')
+        fam3.hus_id = 'I06'
+        fam3.wife_id = 'I05'
+        fam3.marriage_d = '22 FEB 1980'
+        fam3.children = ["I07", "I08"]
+
+        self.assertEqual(List_multiple_births((ind1, ind2, ind3, ind4, ind5, ind6, ind7, ind8), (fam1, fam2, fam3)),"")
+        ind8.birth_d = '5 Jun 1990'
+
+        self.assertEqual(List_multiple_births((ind1, ind2, ind3, ind4,  ind5, ind6, ind7, ind8), (fam1, fam2, fam3)),[['5 Jun 1990', 'Child7'] , ['5 Jun 1990', 'Child8']])

@@ -21,9 +21,8 @@ from data_classes import Individual, Ancestors
 from data_classes import Family
 from data_classes import Ancestors
 from dateutil import relativedelta
-from typing import List, Dict, Any
+from typing import List, Dict
 from collections import Counter
-
 
 def check_valid(individuals: List[Individual], families: List[Family]):
     error_statuses = []
@@ -847,3 +846,35 @@ def us14_multiple_births_less_than_5(individuals, families):
                 my_error = "Error: US14: Family " + family.fam_id + " has more than 5 siblings born at once."
 
     return my_error
+
+
+# User story 32, List multiple births
+def List_multiple_births(individuals, families):
+    my_error = ""
+    for family in families:
+        sibling_ids = family.children
+        siblings = list(x for x in individuals if x.ind_id in sibling_ids)
+        sib_birthdays = []
+        for sibling in siblings:
+            name_birth_d = [sibling.birth_d,sibling.name]
+            sib_birthdays.append(name_birth_d)
+            unique =[]
+            duplicate =[]
+            duplicate1 =[]
+            for element in sib_birthdays:
+                if element[0] not in unique:
+                    unique.append(element[0])
+                else:
+                    duplicate.append(element[0])
+
+            for element in sib_birthdays:
+                if element[0] in duplicate:
+                    duplicate1.append(element)
+
+            if duplicate:
+                my_error = duplicate1
+
+    return my_error
+
+
+
