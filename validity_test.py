@@ -959,23 +959,15 @@ def us42_reject_illegitimate_dates(individuals):
     return my_error
 
 #US41 Accept partial dates
-def us41_accept_partial_dates(individuals, families ):
+def us41_accept_partial_dates(individuals):
         my_error = " "
 
         for ind in individuals:
-            if "Birthday" in ind  and ind["Birthday"] == None:
+            if "BIRTH DATE" in ind  and ind["BIRTH DATE"] == None:
                 my_error = "Error: US41: Individual " + str(ind["ID"]) + " has partial Birthdate."
 
-        for family in families:
-            if "BIRTH DATE" in family and family["BIRTH DATE"] == None:
-                my_error = "Error: US41: family " + str(family["ID"]) + " has partial Birthdate."
-
-
-        for family in families:
-            if "DEATH DATE" in family and family["DEATH DATE"] == None:
-                my_error = "Error: US41: family" + str(family["FAMID"]) + " Has partial Death Date."
+        for ind in individuals:
+            if "DEATH DATE'" in ind and ind["DEATH DATE'"] == None:
+                my_error = "Error: US41: Individual " + str(ind["ID"]) + " has partial Deathdate."
 
         return my_error
-
-
-
