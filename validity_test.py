@@ -271,8 +271,8 @@ def date_before(dates):
     valid = True
     try:
         for date in dates:
-            if not date_is_invalid(date):
-                f_date = convert_date(date)
+            if date != None:
+                f_date = datetime.strptime(date.rstrip(), '%d %b %Y').date()
                 c_date = datetime.now().date()
                 if f_date > c_date:
                     valid = False
