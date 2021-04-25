@@ -229,6 +229,7 @@ try:
     print("\nUS14 ==> Multiple births less than or equal to 5 : \n",validity_test.us14_multiple_births_less_than_5(individuals, families))
     print("\nUS32 ==> List of Multiple births in a family : \n",validity_test.List_multiple_births(individuals, families))
     print("\nUS16 ==> Male last names : \n", validity_test.us16_male_last_names(individuals, families))
+    print("\nUS42 ==> Illegitimate dates : \n", validity_test.us42_reject_illegitimate_dates(individuals))
     for family1 in families:
         for family2 in families:
             if family1.fam_id != family2.fam_id and (family1.hus_id == family2.hus_id or family1.wife_id == family2.wife_id):
